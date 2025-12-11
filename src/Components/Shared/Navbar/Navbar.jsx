@@ -27,7 +27,7 @@ const Navbar = () => {
           {/* Middle: Desktop Navigation */}
           <div className="hidden md:flex gap-6">
             <Link to="/" className="link link-hover font-semibold">Home</Link>
-            <Link to="/meals" className="link link-hover font-semibold">Meals</Link>
+          {/* <Link to="/mealsDetails" className="link link-hover font-semibold">Meals</Link> */}
 
             {user && (
               <Link to="/dashboard" className="link link-hover font-semibold">
