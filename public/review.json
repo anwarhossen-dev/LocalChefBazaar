@@ -1,0 +1,38 @@
+[
+  {
+    "id": "rev101",
+    "mealName": "Chicken Biriyani",
+    "rating": 5,
+    "comment": "Delicious and flavorful! Highly recommended.",
+    "date": "2025-01-05T14:32:00Z",
+    "userId": "user99",
+    "mealId": "meal11"
+  },
+  {
+    "id": "rev102",
+    "mealName": "Beef Tehari",
+    "rating": 4,
+    "comment": "Good taste and fresh, but delivery was a bit late.",
+    "date": "2025-01-06T10:12:00Z",
+    "userId": "user99",
+    "mealId": "meal22"
+  },
+  {
+    "id": "rev103",
+    "mealName": "Grilled Chicken Salad",
+    "rating": 3,
+    "comment": "Healthy meal, but portion size was small.",
+    "date": "2025-01-07T18:20:00Z",
+    "userId": "user99",
+    "mealId": "meal33"
+  },
+  {
+    "id": "rev104",
+    "mealName": "Mutton Kacchi",
+    "rating": 5,
+    "comment": "Absolutely amazing! Perfect for special meals.",
+    "date": "2025-01-08T09:45:00Z",
+    "userId": "user99",
+    "mealId": "meal44"
+  }
+]
