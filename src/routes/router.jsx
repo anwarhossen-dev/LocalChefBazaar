@@ -13,6 +13,8 @@ import ManageOrders from "../Pages/Dashboard/Seller/ManageOrders";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import MyOrders from "../Pages/Dashboard/Customer/MyOrders";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
+//import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 
 
 
@@ -29,7 +31,11 @@ export const router = createBrowserRouter([
         {
             path: 'mealsDetails/:id',
             element:<MealsDetails></MealsDetails>
-        }
+        },
+         {
+        path: '/payment-success',
+        element: <PaymentSuccess/>,
+      },
     ]
    },
    { path: '/login', element: <Login /> },

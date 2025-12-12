@@ -442,16 +442,6 @@ const AddMealForm = () => {
               ></textarea>
             </div>
 
-            {/* Delivery Time */}
-            <div className="space-y-1 text-sm">
-              <label className="block text-gray-600">Estimated Delivery Time</label>
-              <input
-                type="text"
-                placeholder="30 minutes"
-                className="w-full px-4 py-3 border border-lime-300 rounded-md bg-white"
-                {...register("estimatedDeliveryTime", { required: true })}
-              />
-            </div>
           </div>
 
           {/* RIGHT SECTION */}

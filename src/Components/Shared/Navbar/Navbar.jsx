@@ -12,9 +12,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed top-0 w-full bg-base-100 z-50 shadow ">
-      <Container>
-        <div className="navbar justify-between px-4 md:px-6">
+    <div className="fixed mx-auto top-0 w-10/12 bg-base-100 z-50 shadow ">
+      {/* <Container> */}
+        <div className="navbar mx-auto justify-between px-4 md:px-6">
 
           {/* Left: Logo + Name */}
           <div className="flex-1">
@@ -84,6 +84,12 @@ const Navbar = () => {
                 <Link to="/meals" className="hover:bg-base-200 p-2 rounded">
                   Meals
                 </Link>
+                <Link to="/mealsDetails" className="hover:bg-base-200 p-2 rounded">
+                  Meals
+                </Link>
+                <Link to="/add-Order" className="hover:bg-base-200 p-2 rounded">
+                  Order History
+                </Link>
 
                 {/* {user && (
                   <Link to="/dashboard" className="hover:bg-base-200 p-2 rounded">
@@ -128,7 +134,7 @@ const Navbar = () => {
             )}
           </div>
         </div>
-      </Container>
+      {/* </Container> */}
     </div>
   );
 };
