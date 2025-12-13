@@ -7,6 +7,7 @@ import LoadingSpinner from '../Shared/LoadingSpinner';
 import { data } from 'react-router';
 
 const Meal = () => {
+  
   const {data: meals = [], isLoading, isError} = useQuery({
     queryKey: ['meals'],
     queryFn: async()=>{
@@ -28,6 +29,8 @@ const Meal = () => {
       </div>
         ): null
       }
+
+      
     </Container>
     );
 };

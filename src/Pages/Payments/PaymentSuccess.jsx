@@ -1,25 +1,4 @@
-// //import axios from 'axios'
-// import axios from 'axios'
-// import React, { useEffect } from 'react'
-// //import { Link, useSearchParams } from 'react-router'
-// import { IoBagCheckOutline } from 'react-icons/io5'
-// import { useSearchParams } from 'react-router'
-// const PaymentSuccess = () => {
-//   const [searchParams] = useSearchParams()
-//   const sessionId = searchParams.get('session_id')
-//   useEffect(() => {
-//     if (sessionId) {
-//       axios.post(`${import.meta.env.VITE_API_URL}/payment-success`, {
-//         sessionId,
-//       })
-//     }
-//   }, [sessionId])
-//   return (
-    
-//   )
-// }
 
-// export default PaymentSuccess
 
 import axios from 'axios';
 import React, { useEffect } from 'react';

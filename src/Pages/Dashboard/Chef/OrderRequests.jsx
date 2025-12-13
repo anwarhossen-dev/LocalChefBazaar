@@ -1,7 +1,7 @@
 import React from 'react';
 import MealsDataRow from '../../../Components/Dashboard/TableRows/MealsDataRow';
 
-const MyInventory = () => {
+const OrderRequests = () => {
     return (
         <div>
              <div className='container mx-auto px-4 sm:px-8'>
@@ -68,4 +68,4 @@ const MyInventory = () => {
     );
 };
 
-export default MyInventory;
+export default OrderRequests.jsx;

@@ -6,14 +6,17 @@ import MealsDetails from "../Pages/MealsDetails/MealsDetails";
 import Register from "../Pages/Shared/Register/Register";
 import Login from "../Pages/Shared/Login/Login";
 import DashboardLayout from "../layouts/DashboardLayout";
-import AddMeal from "../Pages/Dashboard/Seller/AddMeal";
+import AddMeal from "../Pages/Dashboard/Chef/AddMeal";
 import Statistics from "../Pages/Dashboard/Common/Statistics";
-import MyInventory from "../Pages/Dashboard/Seller/MyInventory";
-import ManageOrders from "../Pages/Dashboard/Seller/ManageOrders";
+import ManageOrders from "../Pages/Dashboard/Chef/ManageOrders";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import MyOrders from "../Pages/Dashboard/Customer/MyOrders";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
+import OrderRequests from "../Pages/Dashboard/Chef/Orderrequests";
+import Meals from "../Pages/MealsDetails/Meals";
+import Order from "../Pages/Order/Order";
+//import OrderRequests from "../Pages/Dashboard/Chef/OrderRequests";
 //import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 
 
@@ -28,18 +31,22 @@ export const router = createBrowserRouter([
             path: '/',
             element:<Home></Home>
         },
+        { path: "/meals", element: <Meals /> },
         {
             path: 'mealsDetails/:id',
             element:<MealsDetails></MealsDetails>
         },
+        { path: "/order/:id", element: <Order/> },
          {
         path: '/payment-success',
         element: <PaymentSuccess/>,
       },
     ]
    },
+  //  login page 
    { path: '/login', element: <Login /> },
   { path: '/register', element: <Register /> },
+  // dashbord
    {
     path: '/dashboard',
     element: (
@@ -65,10 +72,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'my-inventory',
+        path: 'my-OrderRequests',
         element: (
           //<PrivateRoute>
-            <MyInventory />
+            <OrderRequests />
           //</PrivateRoute>
         ),
       },
