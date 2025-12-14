@@ -84,11 +84,13 @@ const AddMealForm = () => {
 
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50 p-4">
-      <form className="w-full max-w-4xl" onSubmit={handleSubmit(onSubmit)}>
+      <h2>Add New Meals</h2>
+      <form className="w-full max-w-4xl" onSubmit={handleSubmit(onSubmit)}> 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
           {/* LEFT SECTION */}
           <div className="space-y-6">
+            
 
             {/* Food Name */}
             <div className="space-y-1 text-sm">
