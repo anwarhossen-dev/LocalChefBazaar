@@ -1,9 +1,13 @@
 import React from 'react';
 import useAuth from '../../../hooks/useAuth';
 import coverImg from '../../../assets/cover.png'
+import useRole from '../../../hooks/useRole';
 
 const Profile = () => {
-    const { user } = useAuth()
+      const { user } = useAuth()
+  const [role, isRoleLoading] = useRole()
+  // const { role, isRoleLoading } = useRole()
+  console.log(role, isRoleLoading)
 
 
     return (
