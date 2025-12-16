@@ -1,17 +1,36 @@
-// import React, { useState } from "react";
+
+
+
+// // Full Meal Details Page with Auth Guard, Reviews, and Favorites
+// import React, { useState, useContext } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
+// import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+// import axios from "axios";
+// import { FaStar } from "react-icons/fa";
+// import Swal from "sweetalert2";
+
 // import Container from "../../Components/Shared/Container";
 // import Heading from "../../Components/Shared/Heading";
 // import Button from "../../Components/Shared/Button/Button";
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
 // import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
-// import { FaStar } from "react-icons/fa";
+// import { AuthContext } from "../../providers/AuthContext";
+// //import { AuthContext } from "../../Providers/AuthProvider";
 
 // const MealsDetails = () => {
 //   const { id } = useParams();
 //   const navigate = useNavigate();
+//   const queryClient = useQueryClient();
+//   const { user, loading } = useContext(AuthContext);
 
+//   const [rating, setRating] = useState(5);
+//   const [comment, setComment] = useState("");
+
+//   // 🔐 Auth Guard
+//   if (!loading && !user) {
+//     navigate("/login");
+//   }
+
+//   // 🍽 Fetch meal
 //   const { data: meal = {}, isLoading } = useQuery({
 //     queryKey: ["meal", id],
 //     queryFn: async () => {
@@ -20,22 +39,57 @@
 //     },
 //   });
 
-//   if (isLoading) {
-//     return (
-//       <div className="text-center py-12 text-xl font-semibold">
-//         <LoadingSpinner />
-//       </div>
-//     );
-//   }
+//   // ⭐ Fetch reviews
+//   const { data: reviews = [] } = useQuery({
+//     queryKey: ["reviews", id],
+//     queryFn: async () => {
+//       const res = await axios.get(`${import.meta.env.VITE_API_URL}/reviews?foodId=${id}`);
+//       return res.data;
+//     },
+//   });
 
-//   // Meal Data
+//   // ➕ Add review
+//   const addReview = useMutation({
+//     mutationFn: async (reviewData) => {
+//       return axios.post(`${import.meta.env.VITE_API_URL}/reviews`, reviewData);
+//     },
+//     onSuccess: () => {
+//       queryClient.invalidateQueries(["reviews", id]);
+//       Swal.fire("Success", "Review submitted successfully!", "success");
+//       setComment("");
+//       setRating(5);
+//     },
+//   });
+
+//   // ❤️ Add to favorite
+//   const addFavorite = async () => {
+//     const favoriteData = {
+//       userEmail: user.email,
+//       mealId: meal._id,
+//       mealName: meal.foodName,
+//       chefId: meal.chefId,
+//       chefName: meal.chefName,
+//       price: meal.price,
+//       addedTime: new Date().toISOString(),
+//     };
+
+//     try {
+//       await axios.post(`${import.meta.env.VITE_API_URL}/favorites`, favoriteData);
+//       Swal.fire("Added", "Meal added to favorites!", "success");
+//     } catch (err) {
+//       Swal.fire("Info", "This meal is already in your favorites", "info");
+//     }
+//   };
+
+//   if (isLoading) return <LoadingSpinner />;
+
 //   const {
 //     foodName,
 //     chefName,
 //     chefId,
 //     image,
 //     price,
-//     rating,
+//     rating: avgRating,
 //     description,
 //     deliveryArea,
 //     deliveryTime,
@@ -44,121 +98,90 @@
 
 //   return (
 //     <Container>
-//       <div className="mx-auto flex flex-col lg:flex-row justify-between w-full gap-12 my-12">
+//       <div className="grid lg:grid-cols-2 gap-12 my-12">
+//         {/* Image */}
+//         <img src={image} alt={foodName} className="rounded-xl w-full h-[450px] object-cover" />
 
-//         {/* Left — Image */}
-//         <div className="flex-1">
-//           <div className="w-full rounded-2xl overflow-hidden shadow-xl border">
-//             <img
-//               className="object-cover w-full h-[450px]"
-//               src={image}
-//               alt={foodName}
-//             />
+//         {/* Details */}
+//         <div className="space-y-4">
+//           <Heading title={foodName} subtitle={`Chef: ${chefName} (ID: ${chefId})`} />
+
+//           <div className="flex items-center gap-1">
+//             {[1, 2, 3, 4, 5].map((s) => (
+//               <FaStar key={s} className={avgRating >= s ? "text-yellow-400" : "text-gray-300"} />
+//             ))}
+//             <span className="ml-2">({avgRating}/5)</span>
+//           </div>
+
+//           <p><strong>Ingredients:</strong> {description}</p>
+//           <p><strong>Delivery Area:</strong> {deliveryArea}</p>
+//           <p><strong>Estimated Delivery:</strong> {deliveryTime} mins</p>
+//           <p><strong>Chef Experience:</strong> {chefExperience} years</p>
+
+//           <div className="flex items-center gap-4 mt-6">
+//             <p className="text-3xl font-bold">${price}</p>
+//             <Button label="Order Now" onClick={() => navigate(`/order/${id}`)} />
+//             <Button label="❤️ Favorite" onClick={addFavorite} />
 //           </div>
 //         </div>
+//       </div>
 
-//         {/* Right — Details */}
-//         <div className="flex-1 flex flex-col gap-6 mt-6 lg:mt-0">
+//       {/* 📝 Review Section */}
+//       <div className="mt-16">
+//         <h2 className="text-2xl font-bold mb-4">Reviews</h2>
 
-//           {/* Title */}
-//           <Heading
-//             title={foodName}
-//             subtitle={`Chef: ${chefName} (ID: ${chefId})`}
-//           />
+//         {/* Existing Reviews */}
+//         <div className="space-y-4">
+//           {reviews.map((r) => (
+//             <div key={r._id} className="border p-4 rounded">
+//               <div className="flex items-center gap-3">
+//                 <img src={r.reviewerImage} className="w-10 h-10 rounded-full" />
+//                 <div>
+//                   <p className="font-semibold">{r.reviewerName}</p>
+//                   <div className="flex">
+//                     {[1, 2, 3, 4, 5].map((s) => (
+//                       <FaStar key={s} className={r.rating >= s ? "text-yellow-400" : "text-gray-300"} />
+//                     ))}
+//                   </div>
+//                 </div>
+//               </div>
+//               <p className="mt-2">{r.comment}</p>
+//               <p className="text-sm text-gray-500">{new Date(r.date).toLocaleString()}</p>
+//             </div>
+//           ))}
+//         </div>
 
-//           {/* Rating */}
-//           <div className="flex items-center gap-2 mt-2">
-//             <p className="font-semibold text-white-700 text-lg">Rating:</p>
-
-//             {[1, 2, 3, 4, 5].map((star) => (
+//         {/* Add Review */}
+//         <div className="mt-8">
+//           <h3 className="text-xl font-semibold mb-2">Give Review</h3>
+//           <div className="flex gap-1 mb-2">
+//             {[1, 2, 3, 4, 5].map((s) => (
 //               <FaStar
-//                 key={star}
-//                 className={`text-xl ${rating >= star ? "text-yellow-400" : "text-white-700"
-//                   }`}
+//                 key={s}
+//                 onClick={() => setRating(s)}
+//                 className={`cursor-pointer ${rating >= s ? "text-yellow-400" : "text-gray-300"}`}
 //               />
 //             ))}
-
-//             <span className="text-white-700 ml-1">({rating}/5)</span>
 //           </div>
-
-//           <hr />
-
-//           {/* Ingredients */}
-//           <p className="text-lg text-white-700">
-//             <span className="font-semibold">Ingredients:</span> {description}
-//           </p>
-
-//           <hr />
-
-//           {/* Delivery Info */}
-//           <p className="text-white-700">
-//             <strong>Delivery Area:</strong> {deliveryArea}
-//           </p>
-
-//           <p className="text-white-700">
-//             <strong>Estimated Delivery Time:</strong> {deliveryTime} mins
-//           </p>
-
-//           <hr />
-
-//           {/* Chef Experience */}
-//           <p className="text-white-700">
-//             <strong>Chef Experience:</strong> {chefExperience} years
-//           </p>
-
-//           <hr />
-
-//           {/* Price + Order Now */}
-//           {/* <div className="flex justify-between items-center w-full mt-4">
-//             <p className="font-bold text-3xl text-gray-700">
-//               Price: ${price}
-//             </p>
-
-//             <div className="ml-auto">
-//               <Button
-//                 label="Order Now"
-//                 onClick={() => navigate(`/order/${id}`)}
-//               />
-//             </div>
-//           </div> */}
-
-//           {/* Price + Order Now */}
-//           <div className="w-full mt-4">
-//             <div className="flex justify-between items-center">
-//               <p className="font-bold text-3xl text-gray-700">
-//                 Price: ${price}
-//               </p>
-
-//               <Button
-//                 label="Order Now"
-//                 onClick={() => navigate(`/order/${id}`)}
-//               />
-//             </div>
-
-//             <hr className="my-6" />
-
-//             {/* Price + Purchase Button */}
-//             <div className="flex justify-between items-center">
-//               <p className="font-bold text-3xl text-gray-500">
-//                 Price: ${price}
-//               </p>
-
-//               <Button
-//                 onClick={() => setIsOpen(true)}
-//                 label="Purchase"
-//               />
-//             </div>
-
-//             <hr className="my-6" />
-
-//             <PurchaseModal
-//               meal={meal}
-//               closeModal={closeModal}
-//               isOpen={isOpen}
-//             />
-//           </div>
-
-//           <hr />
+//           <textarea
+//             className="w-full border rounded p-2"
+//             placeholder="Write your review..."
+//             value={comment}
+//             onChange={(e) => setComment(e.target.value)}
+//           />
+//           <Button
+//             label="Submit Review"
+//             onClick={() =>
+//               addReview.mutate({
+//                 foodId: id,
+//                 reviewerName: user.displayName,
+//                 reviewerImage: user.photoURL,
+//                 rating,
+//                 comment,
+//                 date: new Date().toISOString(),
+//               })
+//             }
+//           />
 //         </div>
 //       </div>
 //     </Container>
@@ -168,43 +191,111 @@
 // export default MealsDetails;
 
 
+// Full Meal Details Page (Private) with Reviews & Favorites
 
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { FaStar } from "react-icons/fa";
+import Swal from "sweetalert2";
+
 import Container from "../../Components/Shared/Container";
 import Heading from "../../Components/Shared/Heading";
 import Button from "../../Components/Shared/Button/Button";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
-import { FaStar } from "react-icons/fa";
-import PurchaseModal from "../../Components/Modal/PurchaseModal";
-
+import { AuthContext } from "../../providers/AuthContext";
 
 const MealsDetails = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const navigate = useNavigate();   // <-- ADDED
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { user, loading } = useContext(AuthContext);
 
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+
+  /* =====================
+        🔐 Auth Guard
+  ====================== */
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [loading, user, navigate]);
+
+  /* =====================
+        🍽 Fetch Meal
+  ====================== */
   const { data: meal = {}, isLoading } = useQuery({
     queryKey: ["meal", id],
+    enabled: !!user,
     queryFn: async () => {
-      const result = await axios.get(
+      const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/meals/${id}`
       );
-      return result.data;
+      return res.data;
     },
   });
 
-  const closeModal = () => setIsOpen(false);
+  /* =====================
+        ⭐ Fetch Reviews
+  ====================== */
+  const { data: reviews = [] } = useQuery({
+    queryKey: ["reviews", id],
+    enabled: !!user,
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/reviews?foodId=${id}`
+      );
+      return res.data;
+    },
+  });
 
-  if (isLoading) {
-    return (
-      <div className="text-center py-12 text-xl font-semibold">
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  /* =====================
+        ➕ Add Review
+  ====================== */
+  const addReview = useMutation({
+    mutationFn: async (reviewData) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/reviews`,
+        reviewData
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reviews", id]);
+      Swal.fire("Success", "Review submitted successfully!", "success");
+      setComment("");
+      setRating(5);
+    },
+  });
+
+  /* =====================
+        ❤️ Add to Favorite
+  ====================== */
+  const handleAddFavorite = async () => {
+    const favoriteData = {
+      userEmail: user.email,
+      mealId: meal._id,
+      mealName: meal.foodName,
+      chefId: meal.chefId,
+      chefName: meal.chefName,
+      price: meal.price,
+      addedTime: new Date().toISOString(),
+    };
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/favorites`,
+        favoriteData
+      );
+      Swal.fire("Success", "Meal added to favorites!", "success");
+    } catch {
+      Swal.fire("Info", "Meal already exists in favorites", "info");
+    }
+  };
+
+  if (loading || isLoading) return <LoadingSpinner />;
 
   const {
     foodName,
@@ -212,8 +303,7 @@ const MealsDetails = () => {
     chefId,
     image,
     price,
-    quantity,
-    rating,
+    rating: avgRating,
     description,
     deliveryArea,
     deliveryTime,
@@ -222,118 +312,128 @@ const MealsDetails = () => {
 
   return (
     <Container>
-      <div className="mx-auto flex flex-col lg:flex-row justify-between w-full gap-12 my-12">
+      {/* =====================
+            Meal Details
+      ====================== */}
+      <div className="grid lg:grid-cols-2 gap-12 my-12">
+        <img
+          src={image}
+          alt={foodName}
+          className="rounded-xl w-full h-[450px] object-cover"
+        />
 
-        {/* Left: Image */}
-        <div className="flex-1">
-          <div className="w-full rounded-2xl overflow-hidden shadow-xl border">
-            <img
-              className="object-cover w-full h-[450px]"
-              src={image}
-              alt={foodName}
-            />
-          </div>
-        </div>
-
-        {/* Right: Details */}
-        <div className="flex-1 flex flex-col gap-6 mt-6 lg:mt-0">
-
+        <div className="space-y-4">
           <Heading
             title={foodName}
             subtitle={`Chef: ${chefName} (ID: ${chefId})`}
           />
 
           {/* Rating */}
-          <div className="flex items-center gap-2 mt-2">
-            <p className="font-semibold text-gray-700 text-lg">Rating:</p>
-
-            {[1, 2, 3, 4, 5].map((star) => (
+          <div className="flex items-center gap-1">
+            {[1, 2, 3, 4, 5].map((s) => (
               <FaStar
-                key={star}
-                className={`text-xl ${rating >= star ? "text-yellow-400" : "text-gray-300"}`}
+                key={s}
+                className={
+                  avgRating >= s ? "text-yellow-400" : "text-gray-300"
+                }
               />
             ))}
-
-            <span className="text-gray-600 ml-1">({rating}/5)</span>
+            <span className="ml-2">({avgRating}/5)</span>
           </div>
 
-          <hr />
+          <p><strong>Ingredients:</strong> {description}</p>
+          <p><strong>Delivery Area:</strong> {deliveryArea}</p>
+          <p><strong>Estimated Delivery Time:</strong> {deliveryTime} mins</p>
+          <p><strong>Chef Experience:</strong> {chefExperience} years</p>
 
-          {/* Ingredients */}
-          <p className="text-lg text-gray-700">
-            <span className="font-semibold">Ingredients:</span> {description}
-          </p>
-
-          <hr />
-
-          {/* Delivery Info */}
-          <p className="text-gray-700">
-            <strong>Delivery Area:</strong> {deliveryArea}
-          </p>
-          <p className="text-gray-700">
-            <strong>quantity:</strong> {quantity}
-          </p>
-
-          <p className="text-gray-700">
-            <strong>Estimated Delivery Time:</strong> {deliveryTime} mins
-          </p>
-
-          <hr />
-
-          <p className="text-gray-700">
-            <strong>Chef Experience:</strong> {chefExperience} years
-          </p>
-
-          <hr />
-
-          {/* Price + Order Button */}
-          {/* <div className="w-full mt-4">
-            <div className="flex justify-between items-center">
-              <p className="font-bold text-3xl text-gray-700">
-                Price: ${price}
-              </p>
-
-              <Button
-                onClick={() => setIsOpen(true)}
-                label="Purchase"
-              />
-            </div>
-
-            <hr className="my-6" />
-
-            <PurchaseModal
-              meal={meal}
-              closeModal={closeModal}
-              isOpen={isOpen}
+          <div className="flex items-center gap-4 mt-6">
+            <p className="text-3xl font-bold">৳{price}</p>
+            <Button
+              label="Order Now"
+              onClick={() => navigate(`/order/${id}`)}
             />
-          </div> */}
+            <Button label="❤️ Favorite" onClick={handleAddFavorite} />
+          </div>
+        </div>
+      </div>
 
-          {/* Price + Order Button */}
-          <div className="w-full mt-4">
-            <div className="flex items-center">
-              <p className="font-bold text-3xl text-gray-700">
-                Price: ${price}
-              </p>
+      {/* =====================
+            Reviews Section
+      ====================== */}
+      <div className="mt-16">
+        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
 
-              {/* Push button to the right */}
-              <div className="ml-auto">
-                <Button
-                  onClick={() => setIsOpen(true)}
-                  label="Order"
+        {/* Existing Reviews */}
+        <div className="space-y-4">
+          {reviews.map((r) => (
+            <div key={r._id} className="border p-4 rounded">
+              <div className="flex items-center gap-3">
+                <img
+                  src={r.reviewerImage}
+                  alt=""
+                  className="w-10 h-10 rounded-full"
                 />
+                <div>
+                  <p className="font-semibold">{r.reviewerName}</p>
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <FaStar
+                        key={s}
+                        className={
+                          r.rating >= s
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
+
+              <p className="mt-2">{r.comment}</p>
+              <p className="text-sm text-gray-500">
+                {new Date(r.date).toLocaleString()}
+              </p>
             </div>
+          ))}
+        </div>
 
-            <hr className="my-6" />
+        {/* Add Review */}
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold mb-2">Give Review</h3>
 
-            <PurchaseModal
-              meal={meal}
-              closeModal={closeModal}
-              isOpen={isOpen}
-            />
+          <div className="flex gap-1 mb-2">
+            {[1, 2, 3, 4, 5].map((s) => (
+              <FaStar
+                key={s}
+                onClick={() => setRating(s)}
+                className={`cursor-pointer ${
+                  rating >= s ? "text-yellow-400" : "text-gray-300"
+                }`}
+              />
+            ))}
           </div>
 
+          <textarea
+            className="w-full border rounded p-2"
+            placeholder="Write your review..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
 
+          <Button
+            label="Submit Review"
+            onClick={() =>
+              addReview.mutate({
+                foodId: id,
+                reviewerName: user.displayName,
+                reviewerImage: user.photoURL,
+                rating,
+                comment,
+                date: new Date().toISOString(),
+              })
+            }
+          />
         </div>
       </div>
     </Container>
@@ -341,6 +441,4 @@ const MealsDetails = () => {
 };
 
 export default MealsDetails;
-
-
 

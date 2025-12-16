@@ -42,13 +42,13 @@ const Banner = () => {
   //     .catch((err) => console.error(err));
   // }, []);
 
-   const [meals, setMeals] = useState([]);
+  const [meals, setMeals] = useState([]);
   const [reviews, setReviews] = useState([]);
 
   // Fetch daily meals
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_URL}/meals?limit=6`)
+      .get(`${import.meta.env.VITE_API_URL}/latest-meals?limit=6`)
       .then((res) => setMeals(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -179,7 +179,7 @@ const Banner = () => {
     <div className="w-full overflow-x-hidden">
 
       {/* HERO / BANNER SECTION */}
-      <motion.section
+      {/* <motion.section
         className="relative h-screen text-white"
         initial="hidden"
         animate="visible"
@@ -220,7 +220,52 @@ const Banner = () => {
             Explore Meals
           </a>
         </motion.div>
+      </motion.section> */}
+
+      <motion.section
+        className="relative h-screen text-white"
+        initial="hidden"
+        animate="visible"
+        variants={heroVariants}
+      >
+        <Carousel
+          autoPlay
+          infiniteLoop
+          interval={4000}
+          showThumbs={false}
+          showStatus={false}
+          showArrows={false}
+          className="h-full"
+        >
+          {[bannerImg, bannerImg1, bannerImg2, bannerImg3].map((img, i) => (
+            <div key={i} style={{ border: '2px ' }}>
+              <img src={img} alt={`banner ${i}`} className="h-screen w-full object-cover" />
+            </div>
+          ))}
+
+        </Carousel>
+
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center bg-opacity-40 text-center px-4"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+            Welcome to <span className="text-orange-500">Local Chef Bazaar</span>
+          </h1>
+          <p className="text-xl md:text-2xl drop-shadow-md">
+            Delicious meals delivered to your doorstep
+          </p>
+          <a
+            href="/meals"
+            className="mt-6 px-8 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+          >
+            Explore Meals
+          </a>
+        </motion.div>
       </motion.section>
+
 
       {/* DAILY MEALS SECTION */}
       <section className="py-16 px-4 container mx-auto">
@@ -239,7 +284,7 @@ const Banner = () => {
                   <p className="text-gray-500">{meal.chefName}</p>
                   <p className="mt-2 font-bold text-orange-600">${meal.price}</p>
                   <a
-                    href={`/meal/${meal._id}`}
+                    href={`/meals/${meal._id}`}
                     className="mt-4 inline-block w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 transition"
                   >
                     See Details
@@ -255,28 +300,6 @@ const Banner = () => {
         </div>
       </section>
 
-      {/* CUSTOMER REVIEWS SECTION
-      <section className="py-16 px-4 container mx-auto bg-gray-100 rounded-xl">
-        <h2 className="text-3xl font-bold mb-8 text-center">Customer Reviews</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <motion.div
-                key={review._id}
-                className="bg-white p-6 rounded-lg shadow hover:scale-105 transition"
-              >
-                <h3 className="text-xl font-semibold">{review.customerName}</h3>
-                <p className="text-gray-500">{review.comment}</p>
-                <p className="mt-2 text-orange-600 font-bold">Rating: {review.rating}/5</p>
-              </motion.div>
-            ))
-          ) : (
-            <div className="text-center col-span-3">
-              <LoadingSpinner />
-            </div>
-          )}
-        </div>
-      </section> */}
 
       {/* EXTRA SECTION - TOP CHEFS */}
       <section className="py-16 px-4 container mx-auto">
