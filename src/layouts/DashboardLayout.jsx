@@ -1,263 +1,244 @@
-import { Outlet } from 'react-router'
-import Sidebar from '../Components/Dashboard/Sidebar/Sidebar'
-//import Sidebar from '../components/Dashboard/Sidebar/Sidebar'
-
+import React, { useEffect, useState } from "react";
+import { GoListOrdered, GoSidebarCollapse } from "react-icons/go";
+import { IoHomeOutline } from "react-icons/io5";
+import { TbLogout2 } from "react-icons/tb";
+import { Link, NavLink, Outlet, useNavigate } from "react-router";
+//import logo from "../../assets/logo1.png";
+import { FaUser, FaUsersSlash } from "react-icons/fa";
+//import useAuth from "../../Hooks/useAuth";
+//import useRole from "../../Hooks/useRole";
+import { LuListEnd } from "react-icons/lu";
+import { MdNoMeals } from "react-icons/md";
+import { GiHotMeal, GiMeal } from "react-icons/gi";
+import { VscPreview } from "react-icons/vsc";
+import { CiSquareQuestion } from "react-icons/ci";
+import { FcStatistics } from "react-icons/fc";
+import Logo from "../Components/Shared/Logo";
+import useAuth from "../Hooks/useAuth";
+import useRole from "../hooks/useRole";
 const DashboardLayout = () => {
-  return (
-    <div className='relative min-h-screen md:flex bg-white'>
-      {/* Left Side: Sidebar Component */}
-      <Sidebar />
-      {/* Right Side: Dashboard Dynamic Content */}
-      <div className='flex-1  md:ml-64'>
-        <div className='p-5'>
-          {/* Outlet for dynamic contents */}
-          <Outlet />
+    const { user, logOut } = useAuth();
+    const { role } = useRole();
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const handleThemeToggle = (e) => {
+        setTheme(e.target.checked ? "dark" : "light");
+    };
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                alert("Logged out successfully");
+                console.log("Logged out successfully");
+                navigate("/");
+            })
+            .catch((error) => console.error("Logout Error:", error));
+    };
+    return (
+        <div className="drawer lg:drawer-open max-w-7xl mx-auto">
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+                {/* Navbar */}
+                <nav className="navbar w-full bg-base-300 shahdow-md flex justify-between px-2 sm:px-4">
+                    <div className="flex items-center justify-center">
+                        <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost btn-sm sm:btn-md min-h-[44px]">
+                            {/* Sidebar toggle icon */}
+                            <GoSidebarCollapse className="text-lg sm:text-xl" />
+                        </label>
+                        <div className="px-2 sm:px-4 text-sm sm:text-base font-semibold">Local Chef Bazar</div>
+                    </div>
+
+                    <div className="relative flex items-center gap-2 sm:gap-3 pr-2 sm:pr-5">
+                        <label>
+                            <input type="checkbox" className="toggle toggle-sm sm:toggle-md" onChange={handleThemeToggle} checked={theme === "dark"} />
+                        </label>
+                        <img src={user?.photoURL} alt="Profile" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-300" />
+                        <div className="text-left hidden sm:block">
+                            <p className="font-semibold text-sm">{user?.displayName}</p>
+                            <p className="text-xs text-gray-500">{role}</p>
+                        </div>
+                    </div>
+                </nav>
+
+                {/* Page content here */}
+                <Outlet />
+            </div>
+
+            <div className="drawer-side is-drawer-close:overflow-visible">
+                <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
+                <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-40">
+                    {/* Sidebar content here */}
+                    <ul className="menu">
+                        <li>
+                            <img src={Logo} alt="logo" className="w-24 h-10 mx-auto mb-4 is-drawer-close:hidden" />
+                        </li>
+                        <li>
+                            <Link to={"/"} className="is-drawer-close:tooltip is-drawer-close:tooltip-right mt-20" data-tip="Homepage">
+                                <IoHomeOutline className="text-xl" />
+                                <span className="is-drawer-close:hidden">Homepage</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/dashboard/myProfile"
+                                data-tip="My-Profile"
+                                className={({ isActive }) =>
+                                    `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                }
+                            >
+                                <FaUser className="text-xl" />
+                                <span className="is-drawer-close:hidden">My Profile</span>
+                            </NavLink>
+                        </li>
+                        {role === "admin" && (
+                            <>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/manageUsers"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Manage Users"
+                                    >
+                                        <FaUsersSlash className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Manage Users</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/manageRequests"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Manage Requests"
+                                    >
+                                        <CiSquareQuestion className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Manage Requests</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/plateformStatistics"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Plateform Statistics"
+                                    >
+                                        <FcStatistics className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Plateform Statistics</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
+                        {role === "user" && (
+                            <>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/myOrders"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="My Orders"
+                                    >
+                                        <GoListOrdered className="text-xl" />
+                                        <span className="is-drawer-close:hidden">My Orders</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/myReview"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="My Review"
+                                    >
+                                        <VscPreview className="text-xl" />
+                                        <span className="is-drawer-close:hidden">My Review</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/favouriteMeal"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Favourite Meal"
+                                    >
+                                        <GiMeal className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Favourite Meal</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
+                        {role === "chef" && (
+                            <>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/createMeal"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Create Meal"
+                                    >
+                                        <GiHotMeal className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Create Meal</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/myMeals"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="My Meal"
+                                    >
+                                        <MdNoMeals className="text-xl" />
+                                        <span className="is-drawer-close:hidden">My Meal</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/dashboard/orderRequests"}
+                                        className={({ isActive }) =>
+                                            `is-drawer-close:tooltip is-drawer-close:tooltip-right mt-2 flex items-center gap-2 
+      ${isActive ? "bg-orange-500 text-white font-semibold rounded-lg" : ""}`
+                                        }
+                                        data-tip="Order Requests"
+                                    >
+                                        <LuListEnd className="text-xl" />
+                                        <span className="is-drawer-close:hidden">Order Requests</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
+
+                        <li>
+                            <Link onClick={handleLogout} className="is-drawer-close:tooltip is-drawer-close:tooltip-right mt-10" data-tip="LogOut">
+                                <TbLogout2 className="text-xl" />
+                                <span className="is-drawer-close:hidden">LogOut</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
-}
+    );
+};
 
-export default DashboardLayout
-
-
-// import { BarChart3, ChefHat, FileText, Heart, Package, Plus, ShoppingBag, Star, User, Users } from "lucide-react";
-// import React, { useState } from "react";
-// import { ToastContainer } from "react-toastify";
-// import AddMeal from "../Pages/Dashboard/Chef/AddMeal";
-// import Favorite from "../Pages/Dashboard/Customer/Favorite";
-// import AddReview from "../Pages/Dashboard/Customer/AddReview";
-// // import {
-// //   Menu,
-// //   X,
-// //   User,
-// //   ShoppingBag,
-// //   Star,
-// //   Heart,
-// //   ChefHat,
-// //   Plus,
-// //   Package,
-// //   Users,
-// //   FileText,
-// //   BarChart3,
-// //   LogOut,
-// // } from "lucide-react";
-
-// // Navigation Hook
-// const useNavigation = () => {
-//   const [currentPath, setCurrentPath] = useState("/dashboard/profile");
-
-//   const navigate = (path) => {
-//     setCurrentPath(path);
-//   };
-
-//   return { currentPath, navigate };
-// };
-
-// // App Component
-// export default function App() {
-//   const [user, setUser] = useState({ role: "user", name: "John Doe" });
-//   const [sidebarOpen, setSidebarOpen] = useState(false);
-//   const { currentPath, navigate } = useNavigation();
-
-//   const userMenuItems = [
-//     { path: "/dashboard/profile", icon: User, label: "My Profile" },
-//     { path: "/dashboard/orders", icon: ShoppingBag, label: "My Orders" },
-//     { path: "/dashboard/reviews", icon: Star, label: "My Reviews" },
-//     { path: "/dashboard/favorites", icon: Heart, label: "Favorite Meals" },
-//   ];
-
-//   const chefMenuItems = [
-//     { path: "/dashboard/profile", icon: User, label: "My Profile" },
-//     { path: "/dashboard/create-meal", icon: Plus, label: "Create Meal" },
-//     { path: "/dashboard/my-meals", icon: ChefHat, label: "My Meals" },
-//     {
-//       path: "/dashboard/order-requests",
-//       icon: Package,
-//       label: "Order Requests",
-//     },
-//   ];
-
-//   const adminMenuItems = [
-//     { path: "/dashboard/profile", icon: User, label: "My Profile" },
-//     { path: "/dashboard/manage-users", icon: Users, label: "Manage Users" },
-//     {
-//       path: "/dashboard/manage-requests",
-//       icon: FileText,
-//       label: "Manage Requests",
-//     },
-//     {
-//       path: "/dashboard/statistics",
-//       icon: BarChart3,
-//       label: "Platform Statistics",
-//     },
-//   ];
-
-//   const getMenuItems = () => {
-//     switch (user.role) {
-//       case "chef":
-//         return chefMenuItems;
-//       case "admin":
-//         return adminMenuItems;
-//       default:
-//         return userMenuItems;
-//     }
-//   };
-
-//   const menuItems = getMenuItems();
-
-//   const handleRoleSwitch = (role) => {
-//     setUser({ ...user, role });
-//     setSidebarOpen(false);
-//     navigate("/dashboard/profile");
-//   };
-
-//   const handleNavigate = (path) => {
-//     navigate(path);
-//     setSidebarOpen(false);
-//   };
-
-//   // Render current page
-//   const renderPage = () => {
-//     switch (currentPath) {
-//       case "/dashboard/profile":
-//         return <MyProfile />;
-//       case "/dashboard/orders":
-//         return <MyOrders />;
-//       case "/dashboard/reviews":
-//         return <AddReview />;
-//       case "/dashboard/favorites":
-//         return <Favorite />;
-//       case "/dashboard/create-meal":
-//         return <AddMeal />;
-//       case "/dashboard/my-meals":
-//         return <MyMeals />;
-//       case "/dashboard/order-requests":
-//         return <OrderRequests />;
-//       case "/dashboard/manage-users":
-//         return <ManageUsers />;
-//       case "/dashboard/manage-requests":
-//         return <ManageRequests />;
-//       case "/dashboard/statistics":
-//         return <Statistics />;
-//       default:
-//         return <MyProfile />;
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50">
-//       {/* Mobile Header */}
-//       <div className="lg:hidden bg-white shadow-sm fixed top-0 left-0 right-0 z-20">
-//         <div className="flex items-center justify-between p-4">
-//           <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
-//           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
-//             {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Sidebar */}
-//       <aside
-//         className={`fixed top-0 left-0 z-30 h-screen w-64 bg-white shadow-lg transform transition-transform duration-300 lg:translate-x-0 ${
-//           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-//         }`}
-//       >
-//         <div className="flex flex-col h-full">
-//           {/* Logo */}
-//           <div className="p-6 border-b">
-//             <h2 className="text-2xl font-bold text-gray-800">
-//               {user.role === "chef"
-//                 ? "👨‍🍳 Chef"
-//                 : user.role === "admin"
-//                 ? "⚙️ Admin"
-//                 : "🍽️ Food"}
-//             </h2>
-//             <p className="text-sm text-gray-500 mt-1">{user.name}</p>
-//           </div>
-
-//           {/* Navigation */}
-//           <nav className="flex-1 p-4 overflow-y-auto">
-//             <ul className="space-y-2">
-//               {menuItems.map((item) => {
-//                 const Icon = item.icon;
-//                 const isActive = currentPath === item.path;
-//                 return (
-//                   <li key={item.path}>
-//                     <button
-//                       onClick={() => handleNavigate(item.path)}
-//                       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors w-full text-left cursor-pointer ${
-//                         isActive
-//                           ? "bg-orange-50 text-primary"
-//                           : "text-gray-700 hover:bg-gray-100"
-//                       }`}
-//                     >
-//                       <Icon size={20} />
-//                       <span className="font-medium">{item.label}</span>
-//                     </button>
-//                   </li>
-//                 );
-//               })}
-//             </ul>
-//           </nav>
-
-//           {/* Role Switcher (Demo) */}
-//           <div className="p-4 border-t">
-//             <p className="text-xs text-gray-500 mb-2">Switch Role (Demo):</p>
-//             <div className="flex gap-2">
-//               <button
-//                 onClick={() => handleRoleSwitch("user")}
-//                 className="px-3 py-1 text-xs bg-gray-100 rounded hover:bg-gray-200"
-//               >
-//                 User
-//               </button>
-//               <button
-//                 onClick={() => handleRoleSwitch("chef")}
-//                 className="px-3 py-1 text-xs bg-gray-100 rounded hover:bg-gray-200"
-//               >
-//                 Chef
-//               </button>
-//               <button
-//                 onClick={() => handleRoleSwitch("admin")}
-//                 className="px-3 py-1 text-xs bg-gray-100 rounded hover:bg-gray-200"
-//               >
-//                 Admin
-//               </button>
-//             </div>
-//           </div>
-
-//           {/* Logout */}
-//           <div className="p-4 border-t">
-//             <button className="flex items-center gap-3 px-4 py-3 w-full text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-//               <LogOut size={20} />
-//               <span className="font-medium">Logout</span>
-//             </button>
-//           </div>
-//         </div>
-//       </aside>
-
-//       {/* Main Content */}
-//       <main className="lg:ml-64 pt-16 lg:pt-0 min-h-screen">
-//         <div className="p-4 lg:p-8">{renderPage()}</div>
-//       </main>
-
-//       {/* Overlay */}
-//       {sidebarOpen && (
-//         <div
-//           className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
-//           onClick={() => setSidebarOpen(false)}
-//         />
-//       )}
-//       <ToastContainer
-//         position="top-right"
-//         autoClose={3000}
-//         hideProgressBar={false}
-//         newestOnTop={false}
-//         closeOnClick
-//         pauseOnHover={false}
-//         draggable
-//         theme="light"
-//       />
-//     </div>
-//   );
-// }
+export default DashboardLayout;

@@ -68,4 +68,4 @@ const OrderRequests = () => {
     );
 };
 
-export default OrderRequests.jsx;
+export default OrderRequests;

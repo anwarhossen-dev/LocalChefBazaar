@@ -1,53 +1,92 @@
 import React from 'react';
-import UserDataRow from '../../../Components/Dashboard/TableRows/UserDataRow';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import Loading from '../../../Components/Shared/Loading';
+import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
-    return (
-        
-        <>
-         <div className='container mx-auto px-4 sm:px-8'>
-        <div className='py-8'>
-          <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
-            <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
-              <table className='min-w-full leading-normal'>
-                <thead>
-                  <tr>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Status
-                    </th>
+    const axiosSecure = useAxiosSecure()
+    const queryClient = useQueryClient()
 
-                    <th
-                      scope='col'
-                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <UserDataRow />
-                </tbody>
-              </table>
+    const {data: users= [], isloading} = useQuery({
+        queryKey: ["users"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/users")
+            return res.data
+        }
+    })
+
+    const handleFraud = async (user) => {
+        await axiosSecure.patch(`/users/fraud/${user.email}`)
+         .then(()=> {
+            Swal.fire({
+                position:"center",
+                icon: "success",
+                title: "User marked Fraud",
+                showConfirmButton: false,
+                timer: 1500,
+            })
+         })
+         queryClient.invalidateQueries("users")
+    }
+
+    if(isloading) return <Loading/>
+    return (
+        <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Manage Users: {users.length}</h2>
+
+            <div className="overflow-x-auto">
+                <table className="table w-full">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user._id}>
+                                <td>{user.displayName}</td>
+                                <td>{user.email}</td>
+
+                                {/* Role */}
+                                <td className="capitalize">{user.role}</td>
+
+                                {/* Status Badge */}
+                                <td>
+                                    <span
+                                        className={`px-2 py-1 text-xs rounded-full text-white capitalize
+                      ${user.status === "active" && "bg-green-600"}
+                      ${user.status === "fraud" && "bg-red-600"}
+                    `}
+                                    >
+                                        {user.status}
+                                    </span>
+                                </td>
+
+                                {/* Make Fraud Button */}
+                                <td>
+                                    <button
+                                        onClick={() => handleFraud(user)}
+                                        disabled={user.status === "fraud"}
+                                        className={`px-3 py-1 rounded text-white
+                      ${user.role === "admin" ? "hidden" : ""}
+                      ${user.status === "fraud" ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}
+                    `}
+                                    >
+                                        Make Fraud
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-          </div>
         </div>
-      </div>
-        </>
     );
 };
 

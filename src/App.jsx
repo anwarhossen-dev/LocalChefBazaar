@@ -1,7 +1,8 @@
 
 
 import './App.css'
-import Navbar from './Components/Shared/Navbar/Navbar'
+import Navbar from './Components/Shared/Navbar'
+//import Navbar from './Components/Shared/Navbar/Navbar'
 
 function App() {
 

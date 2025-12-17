@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 //import { AuthContext } from '../providers/AuthProvider';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../providers/AuthContext';
-import useAuth from '../../../hooks/useAuth';
+//import useAuth from '../../../hooks/useAuth';
 import LoadingSpinner from '../../../Components/Shared/LoadingSpinner';
 import { TbFidgetSpinner } from 'react-icons/tb';
 import { toast } from 'react-toastify';
 import { FcGoogle } from 'react-icons/fc';
 import { saveOrUpdateUser } from '../../../utils';
+import useAuth from '../../../Hooks/useAuth';
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth()
