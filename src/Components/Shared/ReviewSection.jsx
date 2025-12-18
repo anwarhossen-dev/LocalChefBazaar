@@ -3,17 +3,18 @@ import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ReviewsCard from "./ReviewsCard";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ReviewSection = () => {
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosSecure();
     const { data: reviews = [] } = useQuery({
         queryKey: ["review"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/reviews");
+            const res = await axiosPublic.get("/reviews");
             return res.data;
         },
     });

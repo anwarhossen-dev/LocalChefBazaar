@@ -114,20 +114,9 @@
 
 
 
-import { createBrowserRouter } from "react-router";
+//import { createBrowserRouter } from "react-router";
 import Home from "../Pages/Home/Home";
 
-//import AboutUs from "../Pages/AboutUs/AboutUs";
-//import ContactUs from "../Pages/ContactUs/ContactUs";
-//import LoginPage from "../Pages/Auth/Login";
-//import DashboardLayout from "../Layouts/DashboardLayout/DashboardLayout";
-
-//import RootLayout from "../Layouts/RootLayout/RootLayout";
-//import MyProfile from "../Pages/DashBoard/MyProfile";
-// import ManageRequests from "../Pages/DashBoard/Admin/ManageRequests";
-// import ManageUsers from "../Pages/DashBoard/Admin/ManageUsers";
-// import CreateMeals from "../Pages/DashBoard/Chef/CreateMeals";
-// import MyMeals from "../Pages/DashBoard/Chef/MyMeals";
 import Error404 from "../Components/Shared/Error404";
 import Error500 from "../Components/Shared/Error500";
 import PrivateRoute from "./PrivateRoute";
@@ -150,6 +139,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../Pages/Dashboard/User/MyProfile";
 import MealDetails from "../Pages/MealsDetails/MealsDetails";
 import ChefRoute from "./ChefRoute";
+import { createBrowserRouter } from "react-router";
+import MyOrders from "../Pages/Dashboard/User/MyOrders";
+import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 
 
 
@@ -258,6 +250,19 @@ export const router = createBrowserRouter([
                 path: "favouriteMeal",
                 element: <FavMeal />,
                 errorElement: <Error500 />,
+            },
+            {
+                path: "myOrders",
+                element: <MyOrders/>,
+                errorElement: <Error500 />,
+            },
+            // {
+            //     path: "payment-cancelled",
+            //     element: <PaymentCancelled />,
+            // },
+            {
+                path: "payment-success",
+                element: <PaymentSuccess/>
             },
         ],
     },

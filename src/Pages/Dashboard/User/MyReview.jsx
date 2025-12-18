@@ -68,7 +68,7 @@ const MyReview = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                         {myReview.map((review, index) => (
                             <tr>
                                 <th>{index + 1}</th>
@@ -90,7 +90,39 @@ const MyReview = () => {
                                 </td>
                             </tr>
                         ))}
+                    </tbody> */}
+
+                    <tbody>
+                        {myReview.map((review, index) => (
+                            <tr key={review._id}>
+                                <th>{index + 1}</th>
+                                <td>{review.mealName}</td>
+                                <td>
+                                    <span className="flex items-center text-xs sm:text-sm">
+                                        <FaStarHalfAlt className="text-orange-500" />
+                                        <span className="text-xl font-bold ml-1">{review.rating}</span>
+                                    </span>
+                                </td>
+                                <td>{review.comment}</td>
+                                <td>{new Date(review.date).toLocaleDateString()}</td>
+                                <td>
+                                    <span
+                                        onClick={() => handleDelete(review._id)}
+                                        className="btn mr-2 bg-red-400 text-white"
+                                    >
+                                        Delete
+                                    </span>
+                                    <span
+                                        onClick={() => openModal(review)}
+                                        className="btn bg-green-400 text-white"
+                                    >
+                                        Update Review
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
+
                 </table>
             </div>
             {/* modal */}

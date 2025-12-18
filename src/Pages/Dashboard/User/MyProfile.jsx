@@ -4,8 +4,9 @@ import React from "react";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../../Components/Shared/Loading";
 import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 //import Loading from "../../Components/Shared/Loading";
 
 const MyProfile = () => {

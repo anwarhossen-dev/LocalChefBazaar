@@ -13,7 +13,8 @@ import { GiHotMeal, GiMeal } from "react-icons/gi";
 import { VscPreview } from "react-icons/vsc";
 import { CiSquareQuestion } from "react-icons/ci";
 import { FcStatistics } from "react-icons/fc";
-import Logo from "../Components/Shared/Logo";
+// import Logo from "../Components/Shared/Logo";
+import Logo from "../assets/logo.png";
 import useAuth from "../Hooks/useAuth";
 import useRole from "../hooks/useRole";
 const DashboardLayout = () => {
@@ -41,6 +42,7 @@ const DashboardLayout = () => {
             })
             .catch((error) => console.error("Logout Error:", error));
     };
+    console.log(role);
     return (
         <div className="drawer lg:drawer-open max-w-7xl mx-auto">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />

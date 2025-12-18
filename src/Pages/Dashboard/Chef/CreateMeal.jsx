@@ -2,10 +2,11 @@
 import Swal from "sweetalert2";
 
 import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const CreateMeal = () => {
     const axiosSecure = useAxiosSecure();
@@ -47,7 +48,7 @@ const CreateMeal = () => {
         const formData = new FormData();
         formData.append("image", imageFile);
 
-        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_API_KEY}`;
 
         const res = await fetch(url, {
             method: "POST",

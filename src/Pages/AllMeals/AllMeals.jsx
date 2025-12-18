@@ -7,22 +7,45 @@ import { Link } from "react-router";
 import { FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 const AllMeals = () => {
-    const [sortPrice, setSortPrice] = useState("asc");
-    const [searchText, setSearchText] = useState("");
-    const axiosSecure = useAxiosSecure();
+    // const [sortPrice, setSortPrice] = useState("asc");
+    // const [searchText, setSearchText] = useState("");
+    // const axiosSecure = useAxiosSecure();
 
-    const { data: meals = [], isLoading } = useQuery({
-        queryKey: ["all-meals"],
-        queryFn: async () => {
-            const res = await axiosSecure.get("/meals");
-            return res.data;
-        },
-    });
-    console.log(meals)
-    const filteredMeals = meals.filter((meal) => meal.foodName.toLowerCase().includes(searchText.toLowerCase()));
-    const sortedMeals = [...filteredMeals].sort((a, b) => {
-        return sortPrice === "asc" ? a.price - b.price : b.price - a.price;
-    });
+    // const { data: meals = [], isLoading } = useQuery({
+    //     queryKey: ["all-meals"],
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get("/meals");
+    //         return res.data;
+    //     },
+    // });
+    // console.log(meals)
+    // const filteredMeals = meals.filter((meal) => meal.foodName.toLowerCase().includes(searchText.toLowerCase()));
+    // const sortedMeals = [...filteredMeals].sort((a, b) => {
+    //     return sortPrice === "asc" ? a.price - b.price : b.price - a.price;
+    // });
+
+    const [sortPrice, setSortPrice] = useState("asc");
+const [searchText, setSearchText] = useState("");
+const axiosSecure = useAxiosSecure();
+
+const { data: meals = [], isLoading } = useQuery({
+  queryKey: ["all-meals"],
+  queryFn: async () => {
+    const res = await axiosSecure.get("/meals");
+    return res.data.meals; // ✅ IMPORTANT
+  },
+});
+
+if (isLoading) return <AppLoading />;
+
+const filteredMeals = meals.filter(meal =>
+  meal.foodName?.toLowerCase().includes(searchText.toLowerCase())
+);
+
+const sortedMeals = [...filteredMeals].sort((a, b) =>
+  sortPrice === "asc" ? a.price - b.price : b.price - a.price
+);
+
     if (isLoading) return <AppLoading />;
     return (
         <div className="max-w-7xl mx-auto my-10">
