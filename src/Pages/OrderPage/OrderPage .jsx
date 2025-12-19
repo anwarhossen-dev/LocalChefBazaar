@@ -24,7 +24,7 @@ const OrderPage = () => {
 
     // fetch meal details
     axios
-      .get(`/api/meals/${mealId}`)
+      .get(`/orders/${mealId}`)
       .then((res) => setMeal(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
@@ -62,7 +62,7 @@ const OrderPage = () => {
       };
 
       try {
-        await axios.post("/api/orders", orderData);
+        await axios.post("/orders", orderData);
         Swal.fire("Success!", "Order placed successfully!", "success");
         navigate("/orders"); // redirect to user's orders page
       } catch (err) {

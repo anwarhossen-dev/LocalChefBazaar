@@ -310,12 +310,12 @@
 
 // export default MyOrders;
 
-
 import React from "react";
 import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import AppLoading from "../../../Components/Shared/AppLoading";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyOrders = () => {
     const { user } = useAuth();
