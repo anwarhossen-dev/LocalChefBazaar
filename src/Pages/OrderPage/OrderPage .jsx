@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import AppLoading from "../../Components/Shared/AppLoading";
 
 const OrderPage = () => {
   const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -13,15 +15,13 @@ const OrderPage = () => {
     const fetchOrder = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`/orders/${id}`);
+        const { data } = await axiosSecure.get(`/orders/${id}`);
         setOrder(data);
       } catch (err) {
         if (err.response?.status === 404) {
           setError("Order not found.");
-        } else if (err.response?.status === 400) {
-          setError("Invalid Order ID.");
         } else {
-          setError("Failed to fetch order. Try again later.");
+          setError("Failed to fetch order. Please try again later.");
         }
         console.error("Order fetch failed:", err.response?.data || err.message);
       } finally {
@@ -30,10 +30,11 @@ const OrderPage = () => {
     };
 
     fetchOrder();
-  }, [id]);
+  }, [id, axiosSecure]);
 
   if (loading) return <AppLoading />;
   if (error) return <p className="text-center mt-10 text-red-600">{error}</p>;
+  if (!order) return <p className="text-center mt-10">Order not found</p>;
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow rounded mt-10">

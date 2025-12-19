@@ -1,66 +1,54 @@
 
 
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { IoBagCheckOutline } from 'react-icons/io5';
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import AppLoading from "../../Components/Shared/AppLoading";
+import Swal from "sweetalert2";
 
 const PaymentSuccess = () => {
-  const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get('session_id');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  const session_id = new URLSearchParams(search).get("session_id");
 
   useEffect(() => {
-    const verifyPayment = async () => {
-      if (!sessionId) return;
+    if (!session_id) {
+      Swal.fire("Error", "Session ID not found", "error");
+      navigate("/my-orders");
+      return;
+    }
 
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/payment-success`, {
-          params: { sessionId }, // <-- pass sessionId correctly
-        });
-        console.log('Payment verified:', res.data);
-      } catch (err) {
-        console.error('Payment verification error:', err);
-        setError('Could not verify payment. Please contact support.');
-      } finally {
-        setLoading(false);
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await user.getIdToken(); // get Firebase ID token
+        try {
+          await axiosSecure.patch(
+            `/order-payment-success?session_id=${session_id}`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // send token to backend
+              },
+            }
+          );
+          Swal.fire("Success", "Payment Successful!", "success");
+          navigate("/my-orders");
+        } catch (err) {
+          console.error(err);
+          Swal.fire("Error", "Payment verification failed", "error");
+          navigate("/my-orders");
+        }
+      } else {
+        Swal.fire("Error", "You must be logged in", "error");
+        navigate("/login");
       }
-    };
+    });
+  }, [session_id]);
 
-    verifyPayment();
-  }, [sessionId]);
-
-  if (loading) {
-    return <p className="text-center mt-10">Verifying your payment...</p>;
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-10 rounded-lg shadow-lg text-center">
-        <IoBagCheckOutline className="w-16 h-16 text-green-500 mx-auto mb-4" />
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          Payment Successful!
-        </h1>
-        {error ? (
-          <p className="text-red-500 mb-6">{error}</p>
-        ) : (
-          <p className="text-gray-600 mb-6">
-            Thank you for your purchase. Your order is being processed.
-          </p>
-        )}
-        <Link
-          to="/my-orders"
-          className="inline-block bg-lime-500 text-white font-semibold py-2 px-4 rounded hover:bg-lime-600 transition duration-300"
-        >
-          Go to My Orders
-        </Link>
-      </div>
-    </div>
-  );
+  return <AppLoading />;
 };
 
 export default PaymentSuccess;
-
-
