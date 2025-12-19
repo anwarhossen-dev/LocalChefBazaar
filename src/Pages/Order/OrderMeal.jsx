@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useQuery } from "@tanstack/react-query";
-//import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useForm } from 'react-hook-form';
-import useAuth from '../../Hooks/useAuth';
+//import useAuth from '../../Hooks/useAuth';
 import AppLoading from '../Shared/AppLoading';
 import Swal from 'sweetalert2';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { Helmet } from 'react-helmet';
+import useAuth from '../../hooks/useAuth';
 const OrderMeal = () => {
     const {id} = useParams()
     const {user} = useAuth();
@@ -69,6 +70,9 @@ const OrderMeal = () => {
     if(isLoading) return <AppLoading/>
     return (
         <div className="max-w-xl mx-auto my-10 p-6 bg-white shadow-md rounded">
+            <Helmet>
+                <title>Order Now</title>
+            </Helmet>
             <h2 className="text-2xl font-bold mb-4">Confirm Your Order</h2>
 
             <form onSubmit={handleSubmit(orderSubmit)} className="space-y-4">

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import AppLoading from "../../Components/Shared/AppLoading";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from "react-router";
 import { FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AllMeals = () => {
     // const [sortPrice, setSortPrice] = useState("asc");
@@ -32,6 +33,7 @@ const { data: meals = [], isLoading } = useQuery({
   queryKey: ["all-meals"],
   queryFn: async () => {
     const res = await axiosSecure.get("/meals");
+    console.log(res)
     return res.data.meals; // ✅ IMPORTANT
   },
 });
