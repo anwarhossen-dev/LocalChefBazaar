@@ -142,6 +142,9 @@ import ChefRoute from "./ChefRoute";
 import { createBrowserRouter } from "react-router";
 import MyOrders from "../Pages/Dashboard/User/MyOrders";
 import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
+import OrderMeal from "../Pages/Order/OrderMeal";
+import PlatformStatistics from "../Pages/Dashboard/Admin/PlatformStatistics";
+import PaymentCancelled from "../Pages/Payments/PaymentCancelled";
 
 
 
@@ -191,6 +194,15 @@ export const router = createBrowserRouter([
                 ),
                 errorElement: <Error500 />,
             },
+            {
+                path: "/order/:id",
+                element: (
+                    <PrivateRoute>
+                        <OrderMeal />
+                    </PrivateRoute>
+                ),
+                errorElement: <Error500 />,
+            },
         ],
     },
     {
@@ -220,6 +232,10 @@ export const router = createBrowserRouter([
                     </AdminRoute>
                 ),
                 errorElement: <Error500 />,
+            },
+            {
+                path: "Statistics",
+                element: <PlatformStatistics/>
             },
             // chef route
             {
@@ -256,10 +272,10 @@ export const router = createBrowserRouter([
                 element: <MyOrders/>,
                 errorElement: <Error500 />,
             },
-            // {
-            //     path: "payment-cancelled",
-            //     element: <PaymentCancelled />,
-            // },
+            {
+                path: "payment-cancelled",
+                element: <PaymentCancelled />,
+            },
             {
                 path: "payment-success",
                 element: <PaymentSuccess/>

@@ -116,10 +116,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 import SearchNotFound from "../../Components/Shared/SearchNotFound";
 import Card from "../../Components/Home/Card";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Meals = () => {
   const [search, setSearch] = useState("");
@@ -188,8 +189,8 @@ const Meals = () => {
           </h1>
         </div>
 
-        {/* Search */}
-        {/* <div className="col-span-8 mx-auto flex items-center border pl-4 gap-2 bg-white h-[46px] rounded-full max-w-md w-full">
+        Search
+        <div className="col-span-8 mx-auto flex items-center border pl-4 gap-2 bg-white h-[46px] rounded-full max-w-md w-full">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -197,7 +198,7 @@ const Meals = () => {
             placeholder="Search meals..."
             className="w-full outline-none text-sm"
           />
-        </div> */}
+        </div>
 
                 {/* Search box  */}
         <div className="col-span-8 mx-auto flex items-center border pl-4 gap-2 bg-white border-gray-500/30 h-[46px] rounded-full overflow-hidden max-w-md w-full ">

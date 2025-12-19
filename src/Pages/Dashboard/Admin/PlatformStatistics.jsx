@@ -1,10 +1,12 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
-import { useQuery } from "@tanstack/react-query";
+//import { useQuery } from "@tanstack/react-query";
 //import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import AppLoading from "../../../Components/Shared/AppLoading";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 const PlatformStatistics = () => {
