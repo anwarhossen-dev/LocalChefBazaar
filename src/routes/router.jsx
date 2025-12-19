@@ -145,6 +145,8 @@ import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 import OrderMeal from "../Pages/Order/OrderMeal";
 import PlatformStatistics from "../Pages/Dashboard/Admin/PlatformStatistics";
 import PaymentCancelled from "../Pages/Payments/PaymentCancelled";
+import OrderPage from "../Pages/OrderPage/OrderPage ";
+import OrderRequests from "../Pages/Dashboard/Chef/OrderRequests";
 
 
 
@@ -203,6 +205,14 @@ export const router = createBrowserRouter([
                 ),
                 errorElement: <Error500 />,
             },
+            {
+                path: "/orderPage",
+                element:(
+                    <PrivateRoute>
+                        <OrderPage></OrderPage>
+                    </PrivateRoute>
+                )
+            }
         ],
     },
     {
@@ -270,6 +280,11 @@ export const router = createBrowserRouter([
             {
                 path: "myOrders",
                 element: <MyOrders/>,
+                errorElement: <Error500 />,
+            },
+            {
+                path: "OrderRequests",
+                element: <OrderRequests/>,
                 errorElement: <Error500 />,
             },
             {
