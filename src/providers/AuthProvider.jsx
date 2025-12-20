@@ -9,7 +9,7 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth'
-import { auth } from '../firebase/firebase.config'
+import { auth } from '../firebase/firebase.config';
 import { AuthContext } from './AuthContext'
 //import { AuthContext } from './AuthContext'
 
@@ -78,3 +78,5 @@ const AuthProvider = ({ children }) => {
 }
 
 export default AuthProvider
+
+

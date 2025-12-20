@@ -206,12 +206,13 @@ export const router = createBrowserRouter([
                 errorElement: <Error500 />,
             },
             {
-                path: "/orderPage",
+                path: "/OrderPage/:id",
                 element:(
                     <PrivateRoute>
                         <OrderPage></OrderPage>
                     </PrivateRoute>
-                )
+                ),
+                 errorElement: <Error500 />,
             }
         ],
     },

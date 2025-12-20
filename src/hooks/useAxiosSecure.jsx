@@ -10,7 +10,7 @@ import useAuth from './useAuth';
 
 
 const axiosSecure = axios.create({
-    baseURL: "https://vercel.com/anwarhossen-devs-projects/local-chef-bazaar-server",
+    baseURL: "http://localhost:3000/",
 });
 
 const useAxiosSecure = () => {

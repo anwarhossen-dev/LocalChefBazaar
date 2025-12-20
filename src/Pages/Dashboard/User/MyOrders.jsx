@@ -1,12 +1,13 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../Hooks/useAuth";
+//import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import AppLoading from "../../../Components/Shared/AppLoading";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { FaEye, FaTrash, FaApplePay } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const MyOrders = () => {
   const { user } = useAuth();
