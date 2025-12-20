@@ -122,8 +122,8 @@ import Error500 from "../Components/Shared/Error500";
 import PrivateRoute from "./PrivateRoute";
 //import MealDetails from "../Pages/MealDetails/MealDetails";
 import AllMeals from "../Pages/AllMeals/AllMeals";
-import MyReview from "../Pages/DashBoard/User/MyReview";
-import FavMeal from "../Pages/DashBoard/User/FavMeal";
+// import MyReview from "../Pages/DashBoard/User/MyReview";
+// import FavMeal from "../Pages/DashBoard/User/FavMeal";
 import AdminRoute from "./AdminRoute";
 //import ChefRoute from "./ChefRoute";
 import ManageRequests from "../Pages/Dashboard/Admin/ManageRequests";
@@ -147,6 +147,8 @@ import PlatformStatistics from "../Pages/Dashboard/Admin/PlatformStatistics";
 import PaymentCancelled from "../Pages/Payments/PaymentCancelled";
 import OrderPage from "../Pages/OrderPage/OrderPage ";
 import OrderRequests from "../Pages/Dashboard/Chef/OrderRequests";
+import MyReview from "../Pages/Dashboard/User/MyReview";
+import FavMeal from "../Pages/Dashboard/User/FavMeal";
 
 
 
