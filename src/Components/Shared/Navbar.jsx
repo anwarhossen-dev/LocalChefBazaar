@@ -395,7 +395,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/Logo1.png";
-import useAuth from "../../Hooks/useAuth";
+//import useAuth from "../../Hooks/useAuth";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
@@ -412,7 +414,7 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        logOut().catch((error) => console.error("Logout Error:", error));
+        logOut().catch((error) => toast.error("Logout Error:", error));
     };
 
     const links = (

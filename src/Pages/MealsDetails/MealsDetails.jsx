@@ -756,7 +756,7 @@ const MealDetails = () => {
         Swal.fire("Oops!", res.data.message, "info");
       }
     } catch (err) {
-      Swal.fire("Error", "Something went wrong!", "error");
+      Swal.fire("Error", "Something went wrong!", err);
     }
   };
 

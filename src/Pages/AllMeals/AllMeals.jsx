@@ -247,7 +247,7 @@ const AllMeals = () => {
 
                             <Link
                                 to={`/mealDetails/${meal._id}`}
-                                className="btn bg-gray-200 text-black btn-sm md:btn-md mt-4 w-full min-h-11"
+                                className="btn bg-yellow-500 text-black btn-sm md:btn-md mt-4 w-full min-h-11"
                             >
                                 See Details
                             </Link>

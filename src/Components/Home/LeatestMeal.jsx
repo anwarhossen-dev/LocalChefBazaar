@@ -49,9 +49,17 @@ const LeatestMeal = () => {
                                 </div>
                             </div>
 
-                            <Link to={`/mealDetails/${meal._id}`} className="btn btn-sm md:btn-md mt-4 w-full min-h-[44px]">
+                            <Link
+                                to={`/mealDetails/${meal._id}`}
+                                className="mt-4 w-full min-h-[44px] flex items-center justify-center
+             px-4 py-2 rounded-md
+             bg-yellow-500 text-black font-medium
+             hover:bg-gray-300 transition
+             disabled:opacity-50"
+                            >
                                 See Details
                             </Link>
+
                         </div>
                     </div>
                 ))}

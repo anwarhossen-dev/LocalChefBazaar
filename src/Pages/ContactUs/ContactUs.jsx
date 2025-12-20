@@ -18,7 +18,7 @@ const ContactUs = () => {
                     <h3 className="text-lg sm:text-xl font-semibold mb-2 flex items-center gap-2">
                         <FaMapMarkerAlt /> Address
                     </h3>
-                    <p className="text-xs sm:text-sm opacity-80">Dhaka, Bangladesh</p>
+                    <p className="text-xs sm:text-sm opacity-80"> chattogram, Bangladesh</p>
                 </div>
 
                 <div
@@ -28,7 +28,7 @@ const ContactUs = () => {
                     <h3 className="text-lg sm:text-xl font-semibold mb-2 flex items-center gap-2">
                         <IoCallOutline /> Phone
                     </h3>
-                    <p className="text-xs sm:text-sm opacity-80">+880 1234 567 890</p>
+                    <p className="text-xs sm:text-sm opacity-80">+8801777498421</p>
                 </div>
 
                 <div

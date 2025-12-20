@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useAuth from "../../Hooks/useAuth";
+
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const ReviewModal = ({ mealId,mealName, refetch }) => {
     const { register, handleSubmit, reset } = useForm();

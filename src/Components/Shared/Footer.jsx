@@ -57,7 +57,7 @@ const Footer = () => {
                     <h3 className="text-base md:text-lg font-semibold mb-3">Contact</h3>
                     <ul className="space-y-2 text-xs sm:text-sm opacity-90">
                         <li>Email: support@localchefbazaar.com</li>
-                        <li>Phone: +880 1234 567 821</li>
+                        <li>Phone: +8801777498421</li>
                         <li>Address: chattogram, Bangladesh</li>
                     </ul>
                 </div>
@@ -66,17 +66,17 @@ const Footer = () => {
                 <div className="text-center sm:text-left">
                     <h3 className="text-base md:text-lg font-semibold mb-3">Follow Us</h3>
                     <div className="flex flex-col gap-2 md:gap-3 items-center sm:items-start">
-                        <a href="#" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
+                        <a href="https://www.facebook.com/MD.Anowarhossenkabir" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
                             <FaFacebookSquare className="text-2xl md:text-3xl" />
                             <span className="text-sm md:text-lg font-semibold">Facebook</span>
                         </a>
 
-                        <a href="#" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
+                        <a href="https://github.com/anwarhossen-dev" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
                             <FaGithubSquare className="text-2xl md:text-3xl" />
                             <span className="text-sm md:text-lg font-semibold">GitHub</span>
                         </a>
 
-                        <a href="#" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
+                        <a href="https://www.linkedin.com/in/anowar21" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
                             <FaLinkedin className="text-2xl md:text-3xl" />
                             <span className="text-sm md:text-lg font-semibold">LinkedIn</span>
                         </a>

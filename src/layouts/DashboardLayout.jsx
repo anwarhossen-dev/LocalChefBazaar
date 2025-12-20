@@ -268,6 +268,7 @@ import "aos/dist/aos.css";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Aos from "aos";
+import { toast } from "react-toastify";
 const DashboardLayout = () => {
     const { user, logOut } = useAuth();
     const { role } = useRole();
@@ -295,7 +296,7 @@ const DashboardLayout = () => {
         logOut()
             .then(() => {
                 alert("Logged out successfully");
-                console.log("Logged out successfully");
+                toast("Logged out successfully");
                 navigate("/");
             })
             .catch((error) => console.error("Logout Error:", error));

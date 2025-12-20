@@ -7,6 +7,9 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router";
+
+
 
 const CreateMeal = () => {
     const axiosSecure = useAxiosSecure();
@@ -14,6 +17,8 @@ const CreateMeal = () => {
 
     const [imageFile, setImageFile] = useState(null);
     const [preview, setPreview] = useState(null);
+    const navigate = useNavigate();
+
 
     // logged in chefs info
     const { data: userInfo = {}, isLoading: userLoading } = useQuery({
@@ -103,9 +108,16 @@ const CreateMeal = () => {
                     showConfirmButton: false,
                 });
 
-                reset();
-                setImageFile(null);
-                setPreview(null);
+                 reset();
+            setImageFile(null);
+            setPreview(null);
+
+            // ✅ Redirect after success
+            setTimeout(() => {
+                navigate("/home");      // Home page
+                // navigate(-1);    // OR go back
+            }, 1500);
+
             }
         } catch (error) {
             Swal.fire({

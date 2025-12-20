@@ -3,8 +3,9 @@ import React from 'react';
 
 import Loading from '../../../Components/Shared/Loading';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+//import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const ManageRequests = () => {
     const axiosSecure = useAxiosSecure();
@@ -20,7 +21,7 @@ const ManageRequests = () => {
     })
 
     const handleApprove = async (req) => {
-        console.log("clicked", req)
+        //console.log("clicked", req)
         const res = await axiosSecure.patch(`/requests/update/${req._id}`,{
             requestStatus: "approved",
             userEmail: req.userEmail,
@@ -44,7 +45,7 @@ const ManageRequests = () => {
 
 
     const handleReject = async (req) => {
-        console.log("reject clicked", req)
+        //console.log("reject clicked", req)
         const res = await axiosSecure.patch(`/requests/update/${req._id}`, {
             requestStatus: "rejected",
         })
