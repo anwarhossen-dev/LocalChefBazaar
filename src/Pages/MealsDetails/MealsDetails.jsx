@@ -704,6 +704,7 @@ import useAuth from "../../hooks/useAuth";
 //import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Components/Shared/Loading";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
 const MealDetails = () => {
   const { user } = useAuth();
@@ -715,6 +716,7 @@ const MealDetails = () => {
   useEffect(() => {
     if (!user) {
       navigate("/login");
+      toast.success('Login in the successful')
     }
   }, [user, navigate]);
 

@@ -1,9 +1,11 @@
 import React from "react";
-import useAuth from "../../../Hooks/useAuth";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// import useAuth from "../../../Hooks/useAuth";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import AppLoading from "../../../Components/Shared/AppLoading";
 import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const FavMeal = () => {
     const { user } = useAuth();

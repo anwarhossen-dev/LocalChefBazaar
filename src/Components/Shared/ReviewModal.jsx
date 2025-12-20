@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const ReviewModal = ({ mealId,mealName, refetch }) => {
     const { register, handleSubmit, reset } = useForm();
@@ -30,7 +31,7 @@ const ReviewModal = ({ mealId,mealName, refetch }) => {
             refetch();
         }
         if (res.data.success === false) {
-            alert("You have already reviewed");
+            toast.success("You have already reviewed");
         }
     };
     return (
