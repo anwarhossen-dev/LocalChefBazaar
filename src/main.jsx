@@ -9,6 +9,7 @@ import { router } from "./routes/router";
 import AuthProvider from "./providers/AuthProvider";
 import LenisProvider from "./hooks/LenisProvider";
 import { RouterProvider } from "react-router";
+import { ToastContainer } from 'react-toastify';
 
 
 const queryClient = new QueryClient();
@@ -21,5 +22,6 @@ createRoot(document.getElementById("root")).render(
                 </LenisProvider>
             </AuthProvider>
         </QueryClientProvider>
+        <ToastContainer />
     </StrictMode>
 );

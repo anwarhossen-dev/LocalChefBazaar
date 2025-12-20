@@ -8,7 +8,8 @@ import { TbFidgetSpinner } from 'react-icons/tb';
 import { toast } from 'react-toastify';
 import { FcGoogle } from 'react-icons/fc';
 import { saveOrUpdateUser } from '../../../utils';
-import useAuth from '../../../Hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
+//import useAuth from '../../../Hooks/useAuth';
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth()
@@ -43,7 +44,7 @@ const Login = () => {
       navigate(from, { replace: true })
       toast.success('Login Successful')
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }
@@ -59,10 +60,12 @@ const Login = () => {
         email: user?.email,
         image: user?.photoURL,
       })
+      toast.success('Login Successful 🎉')
       navigate(from, { replace: true })
-      toast.success('Login Successful')
+      // navigate(from, { replace: true })
+      // toast.success('Login Successful')
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       setLoading(false)
       toast.error(err?.message)
     }
