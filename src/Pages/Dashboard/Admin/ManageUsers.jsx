@@ -94,11 +94,12 @@
 
 
 import React from "react";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../../Components/Shared/Loading";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();

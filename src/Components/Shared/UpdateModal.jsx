@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const UpdateModal = ({ isOpen, onClose, meal, refetch }) => {
     const axiosSecure = useAxiosSecure();
@@ -40,7 +41,7 @@ const UpdateModal = ({ isOpen, onClose, meal, refetch }) => {
     const uploadToImgBB = async () => {
         const formData = new FormData();
         formData.append("image", newImageFile);
-        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_API_KEY}`;
         const res = await fetch(url, {
             method: "POST",
             body: formData,
