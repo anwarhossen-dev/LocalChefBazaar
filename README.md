@@ -24,8 +24,8 @@ LocalChefBazaar is a modern online marketplace connecting home cooks (chefs) wit
 ---
 
 ## **Live Project**
-**Client URL:** [https://localchefbazaar-612c0.web.app](https://your-client-live-url.com)  
-**Server URL:** [https://local-chef-bazaar-server-nu.vercel.app/](https://your-server-live-url.com)
+**Client URL:** [https://localchefbazaar-612c0.web.app](https://localchefbazaar-612c0.web.app)  
+**Server URL:** [https://local-chef-bazaar-server-nu.vercel.app](https://local-chef-bazaar-server-nu.vercel.app)
 
 ---
 
