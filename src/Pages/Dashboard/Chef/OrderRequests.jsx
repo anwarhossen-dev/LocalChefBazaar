@@ -99,11 +99,13 @@
 // export default OrderRequests;
 
 import React from 'react';
-import useAuth from '../../../Hooks/useAuth';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+//import useAuth from '../../../Hooks/useAuth';
+//import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const OrderRequests = () => {
     const { user } = useAuth();
@@ -129,7 +131,7 @@ const OrderRequests = () => {
                 refetch();
             }
         } catch (error) {
-            Swal.fire("Error", "Something went wrong", "error");
+            Swal.fire("Error", "Something went wrong", error);
         }
     };
 

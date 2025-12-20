@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import useAuth from "../../../Hooks/useAuth";
+// import useAuth from "../../../Hooks/useAuth";
 import { FaStarHalfAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
 
 const MyReview = () => {
     const axiosSecure = useAxiosSecure();

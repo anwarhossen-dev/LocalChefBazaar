@@ -1,8 +1,9 @@
 import React from "react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { FaStarHalfAlt } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const LeatestMeal = () => {
     const axiosSecure = useAxiosSecure();
