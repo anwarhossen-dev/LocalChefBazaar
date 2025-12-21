@@ -1,19 +1,23 @@
 
 
-
-// import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState, useRef } from "react";
 // import { useParams } from "react-router-dom";
 // import useAxiosSecure from "../../hooks/useAxiosSecure";
 // import AppLoading from "../../Components/Shared/AppLoading";
-// import { FaReceipt } from "react-icons/fa";
+// import { FaReceipt, FaFilePdf, FaFileExcel } from "react-icons/fa";
+// import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
+// import * as XLSX from "xlsx";
+// import { saveAs } from "file-saver";
 
 // const OrderPage = () => {
 //   const { id } = useParams();
 //   const axiosSecure = useAxiosSecure();
-
 //   const [order, setOrder] = useState(null);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState("");
+
+//   const invoiceRef = useRef(); // For PDF capture
 
 //   useEffect(() => {
 //     const fetchOrder = async () => {
@@ -26,7 +30,6 @@
 //         setLoading(false);
 //       }
 //     };
-
 //     fetchOrder();
 //   }, [id, axiosSecure]);
 
@@ -36,9 +39,45 @@
 
 //   const total = order.price * order.quantity;
 
+//   // -------------------- PDF --------------------
+//   const handleDownloadPDF = () => {
+//     const input = invoiceRef.current;
+//     html2canvas(input, { scale: 2 }).then((canvas) => {
+//       const imgData = canvas.toDataURL("image/png");
+//       const pdf = new jsPDF("p", "mm", "a4");
+//       const imgProps = pdf.getImageProperties(imgData);
+//       const pdfWidth = pdf.internal.pageSize.getWidth();
+//       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+//       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+//       pdf.save(`Invoice_${order._id}.pdf`);
+//     });
+//   };
+
+//   // -------------------- Excel --------------------
+//   const handleDownloadExcel = () => {
+//     const wsData = [
+//       ["Order ID", order._id],
+//       ["Chef", order.chefName],
+//       ["Status", order.orderStatus],
+//       ["Payment", order.paymentStatus],
+//       ["Date", new Date(order.createdAt).toLocaleDateString()],
+//       [],
+//       ["Meal", "Quantity", "Price", "Total"],
+//       [order.mealName, order.quantity, order.price, total],
+//       [],
+//       ["Subtotal", total],
+//       ["Delivery", 0],
+//       ["Total", total],
+//     ];
+//     const wb = XLSX.utils.book_new();
+//     const ws = XLSX.utils.aoa_to_sheet(wsData);
+//     XLSX.utils.book_append_sheet(wb, ws, "Invoice");
+//     const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+//     saveAs(new Blob([buf], { type: "application/octet-stream" }), `Invoice_${order._id}.xlsx`);
+//   };
+
 //   return (
-//     <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-6 border">
-      
+//     <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-6 border mb-15">
 //       {/* Header */}
 //       <div className="flex items-center justify-between border-b pb-4 mb-4">
 //         <div className="flex items-center gap-2">
@@ -50,64 +89,81 @@
 //         </span>
 //       </div>
 
-//       {/* Info Section */}
-//       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-//         <p><b>Chef:</b> {order.chefName}</p>
-//         <p><b>Status:</b> 
-//           <span className="ml-2 px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs">
-//             {order.orderStatus}
-//           </span>
-//         </p>
-//         <p><b>Payment:</b> 
-//           <span className={`ml-2 px-2 py-1 rounded text-xs ${
-//             order.paymentStatus === "paid"
-//               ? "bg-green-100 text-green-700"
-//               : "bg-red-100 text-red-700"
-//           }`}>
-//             {order.paymentStatus}
-//           </span>
-//         </p>
-//         <p><b>Date:</b> {new Date(order.createdAt).toLocaleDateString()}</p>
+//       {/* Action Buttons */}
+//       <div className="flex gap-3 mb-4">
+//         <button
+//           onClick={handleDownloadPDF}
+//           className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+//         >
+//           <FaFilePdf /> Download PDF
+//         </button>
+//         <button
+//           onClick={handleDownloadExcel}
+//           className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+//         >
+//           <FaFileExcel /> Download Excel
+//         </button>
 //       </div>
 
-//       {/* Table */}
-//       <div className="border rounded-lg overflow-hidden">
-//         <table className="w-full text-sm">
-//           <thead className="bg-gray-100">
-//             <tr>
-//               <th className="text-left p-3">Meal</th>
-//               <th className="text-center p-3">Qty</th>
-//               <th className="text-right p-3">Price</th>
-//               <th className="text-right p-3">Total</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             <tr className="border-t">
-//               <td className="p-3">{order.mealName}</td>
-//               <td className="p-3 text-center">{order.quantity}</td>
-//               <td className="p-3 text-right">${order.price}</td>
-//               <td className="p-3 text-right font-semibold">
-//                 ${total}
-//               </td>
-//             </tr>
-//           </tbody>
-//         </table>
-//       </div>
+//       {/* Invoice Card */}
+//       <div ref={invoiceRef} className="p-4 border rounded">
+//         {/* Info Section */}
+//         <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+//           <p><b>Chef:</b> {order.chefName}</p>
+//           <p><b>Status:</b>
+//             <span className="ml-2 px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs">
+//               {order.orderStatus}
+//             </span>
+//           </p>
+//           <p><b>Payment:</b>
+//             <span className={`ml-2 px-2 py-1 rounded text-xs ${
+//               order.paymentStatus === "paid"
+//                 ? "bg-green-100 text-green-700"
+//                 : "bg-red-100 text-red-700"
+//             }`}>
+//               {order.paymentStatus}
+//             </span>
+//           </p>
+//           <p><b>Date:</b> {new Date(order.createdAt).toLocaleDateString()}</p>
+//         </div>
 
-//       {/* Summary */}
-//       <div className="flex justify-end mt-6">
-//         <div className="w-64 text-sm">
-//           <div className="flex justify-between mb-2">
-//             <span>Subtotal</span>
-//             <span>${total}</span>
-//           </div>
-//           <div className="flex justify-between mb-2">
-//             <span>Delivery</span>
-//             <span>$0</span>
-//           </div>
-//           <div className="flex justify-between font-bold text-lg border-t pt-2">
-//             <span>Total</span>
-//             <span>${total}</span>
+//         {/* Table */}
+//         <div className="border rounded-lg overflow-hidden">
+//           <table className="w-full text-sm">
+//             <thead className="bg-gray-100">
+//               <tr>
+//                 <th className="text-left p-3">Meal</th>
+//                 <th className="text-center p-3">Qty</th>
+//                 <th className="text-right p-3">Price</th>
+//                 <th className="text-right p-3">Total</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               <tr className="border-t">
+//                 <td className="p-3">{order.mealName}</td>
+//                 <td className="p-3 text-center">{order.quantity}</td>
+//                 <td className="p-3 text-right">${order.price}</td>
+//                 <td className="p-3 text-right font-semibold">${total}</td>
+//               </tr>
+//             </tbody>
+//           </table>
+//         </div>
+
+//         {/* Summary */}
+//         <div className="flex justify-end mt-6">
+//           <div className="w-64 text-sm">
+//             <div className="flex justify-between mb-2">
+//               <span>Subtotal</span>
+//               <span>${total}</span>
+//             </div>
+//             <div className="flex justify-between mb-2">
+//               <span>Delivery</span>
+//               <span>$0</span>
+//             </div>
+//             <div className="flex justify-between font-bold text-lg border-t pt-2">
+//               <span>Total</span>
+//               <span>${total}</span>
+//             </div>
 //           </div>
 //         </div>
 //       </div>
@@ -118,13 +174,13 @@
 // export default OrderPage;
 
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import AppLoading from "../../Components/Shared/AppLoading";
 import { FaReceipt, FaFilePdf, FaFileExcel } from "react-icons/fa";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
@@ -134,8 +190,6 @@ const OrderPage = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const invoiceRef = useRef(); // For PDF capture
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -157,18 +211,48 @@ const OrderPage = () => {
 
   const total = order.price * order.quantity;
 
-  // -------------------- PDF --------------------
+  // -------------------- PDF (NO html2canvas) --------------------
   const handleDownloadPDF = () => {
-    const input = invoiceRef.current;
-    html2canvas(input, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`Invoice_${order._id}.pdf`);
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Invoice", 14, 20);
+
+    doc.setFontSize(11);
+    doc.text(`Order ID: ${order._id}`, 14, 30);
+    doc.text(`Chef: ${order.chefName}`, 14, 36);
+    doc.text(`Status: ${order.orderStatus}`, 14, 42);
+    doc.text(`Payment: ${order.paymentStatus}`, 14, 48);
+    doc.text(
+      `Date: ${new Date(order.createdAt).toLocaleDateString()}`,
+      14,
+      54
+    );
+
+    autoTable(doc, {
+      startY: 65,
+      head: [["Meal", "Quantity", "Price", "Total"]],
+      body: [
+        [
+          order.mealName,
+          order.quantity,
+          `$${order.price}`,
+          `$${total}`,
+        ],
+      ],
+      theme: "grid",
+      styles: { fontSize: 11 },
+      headStyles: { fillColor: [240, 240, 240] },
     });
+
+    const finalY = doc.lastAutoTable.finalY + 10;
+
+    doc.text(`Subtotal: $${total}`, 140, finalY);
+    doc.text(`Delivery: $0`, 140, finalY + 6);
+    doc.setFontSize(13);
+    doc.text(`Total: $${total}`, 140, finalY + 14);
+
+    doc.save(`Invoice_${order._id}.pdf`);
   };
 
   // -------------------- Excel --------------------
@@ -187,15 +271,20 @@ const OrderPage = () => {
       ["Delivery", 0],
       ["Total", total],
     ];
+
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.aoa_to_sheet(wsData);
     XLSX.utils.book_append_sheet(wb, ws, "Invoice");
+
     const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    saveAs(new Blob([buf], { type: "application/octet-stream" }), `Invoice_${order._id}.xlsx`);
+    saveAs(
+      new Blob([buf], { type: "application/octet-stream" }),
+      `Invoice_${order._id}.xlsx`
+    );
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-6 border mb-15">
+    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-6 border mb-16">
       {/* Header */}
       <div className="flex items-center justify-between border-b pb-4 mb-4">
         <div className="flex items-center gap-2">
@@ -207,7 +296,7 @@ const OrderPage = () => {
         </span>
       </div>
 
-      {/* Action Buttons */}
+      {/* Actions */}
       <div className="flex gap-3 mb-4">
         <button
           onClick={handleDownloadPDF}
@@ -215,6 +304,7 @@ const OrderPage = () => {
         >
           <FaFilePdf /> Download PDF
         </button>
+
         <button
           onClick={handleDownloadExcel}
           className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -223,62 +313,45 @@ const OrderPage = () => {
         </button>
       </div>
 
-      {/* Invoice Card */}
-      <div ref={invoiceRef} className="p-4 border rounded">
-        {/* Info Section */}
+      {/* Invoice Preview */}
+      <div className="p-4 border rounded">
         <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
           <p><b>Chef:</b> {order.chefName}</p>
-          <p><b>Status:</b>
-            <span className="ml-2 px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs">
-              {order.orderStatus}
-            </span>
-          </p>
-          <p><b>Payment:</b>
-            <span className={`ml-2 px-2 py-1 rounded text-xs ${
-              order.paymentStatus === "paid"
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}>
-              {order.paymentStatus}
-            </span>
-          </p>
+          <p><b>Status:</b> {order.orderStatus}</p>
+          <p><b>Payment:</b> {order.paymentStatus}</p>
           <p><b>Date:</b> {new Date(order.createdAt).toLocaleDateString()}</p>
         </div>
 
-        {/* Table */}
-        <div className="border rounded-lg overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="text-left p-3">Meal</th>
-                <th className="text-center p-3">Qty</th>
-                <th className="text-right p-3">Price</th>
-                <th className="text-right p-3">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t">
-                <td className="p-3">{order.mealName}</td>
-                <td className="p-3 text-center">{order.quantity}</td>
-                <td className="p-3 text-right">${order.price}</td>
-                <td className="p-3 text-right font-semibold">${total}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table className="w-full text-sm border">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-2 text-left">Meal</th>
+              <th className="p-2 text-center">Qty</th>
+              <th className="p-2 text-right">Price</th>
+              <th className="p-2 text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t">
+              <td className="p-2">{order.mealName}</td>
+              <td className="p-2 text-center">{order.quantity}</td>
+              <td className="p-2 text-right">${order.price}</td>
+              <td className="p-2 text-right font-semibold">${total}</td>
+            </tr>
+          </tbody>
+        </table>
 
-        {/* Summary */}
-        <div className="flex justify-end mt-6">
-          <div className="w-64 text-sm">
-            <div className="flex justify-between mb-2">
+        <div className="flex justify-end mt-4 text-sm">
+          <div className="w-64">
+            <div className="flex justify-between">
               <span>Subtotal</span>
               <span>${total}</span>
             </div>
-            <div className="flex justify-between mb-2">
+            <div className="flex justify-between">
               <span>Delivery</span>
               <span>$0</span>
             </div>
-            <div className="flex justify-between font-bold text-lg border-t pt-2">
+            <div className="flex justify-between font-bold border-t mt-2 pt-2">
               <span>Total</span>
               <span>${total}</span>
             </div>
