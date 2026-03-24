@@ -1,0 +1,5 @@
+# আপনার server এর .env file এ এই line add করুন:
+CLIENT_DOMAIN=http://localhost:5173
+
+# অথবা multiple domains এর জন্য:
+CLIENT_DOMAIN=http://localhost:5173,http://127.0.0.1:5173
