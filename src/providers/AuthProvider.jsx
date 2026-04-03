@@ -11,7 +11,6 @@ import {
 } from 'firebase/auth'
 import { auth } from '../firebase/firebase.config';
 import { AuthContext } from './AuthContext'
-//import { AuthContext } from './AuthContext'
 
 
 
@@ -73,7 +72,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext value={authInfo}>{children}</AuthContext>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   )
 }
 

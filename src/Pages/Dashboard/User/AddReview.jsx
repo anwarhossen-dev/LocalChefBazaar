@@ -7,7 +7,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
-import Loading from "../../components/Shared/Loading";
+import Loading from "../../Components/Shared/Loading";
 import ReviewUpdatePopup from "./ReviewUpdatePopup";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 

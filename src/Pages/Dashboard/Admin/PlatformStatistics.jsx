@@ -3,7 +3,7 @@
 
 
 // // import AppLoading from "../../../Components/Shared/AppLoading";
-// // import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// // import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // // import { useQuery } from "@tanstack/react-query";
 
 
@@ -116,7 +116,7 @@
 // import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
 // import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // import AppLoading from "../../../Components/Shared/AppLoading";
 // import { Helmet } from "react-helmet";
 
@@ -233,9 +233,9 @@ import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import AppLoading from "../../../Components/Shared/AppLoading";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PlatformStatistics = () => {
   const axiosSecure = useAxiosSecure(); // ✅ call hook here

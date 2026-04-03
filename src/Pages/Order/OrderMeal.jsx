@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from '../../Hooks/useAxiosSecure';
+// import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useForm } from 'react-hook-form';
-//import useAuth from '../../Hooks/useAuth';
+//import useAuth from '../../hooks/useAuth';
 //import AppLoading from '../Shared/AppLoading';
 import Swal from 'sweetalert2';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import useAuth from '../../hooks/useAuth';
 import AppLoading from '../../Components/Shared/AppLoading';
 import useAxiosSecure from '../../hooks/useAxiosSecure';

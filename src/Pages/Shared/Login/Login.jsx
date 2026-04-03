@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 import { FcGoogle } from 'react-icons/fc';
 import { saveOrUpdateUser } from '../../../utils';
 import useAuth from '../../../hooks/useAuth';
-//import useAuth from '../../../Hooks/useAuth';
+//import useAuth from '../../../hooks/useAuth';
+//import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth()

@@ -16,7 +16,7 @@
 // export default PaymentCancelled;
 
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { FaTimesCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 

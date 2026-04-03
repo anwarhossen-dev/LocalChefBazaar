@@ -1,8 +1,8 @@
 
 
 import React, { useState } from "react";
-// import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-// import useAuth from "../../../Hooks/useAuth";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Shared/Loading";
 import Swal from "sweetalert2";

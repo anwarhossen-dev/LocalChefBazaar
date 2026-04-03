@@ -10,18 +10,21 @@ import AuthProvider from "./providers/AuthProvider";
 import LenisProvider from "./hooks/LenisProvider";
 import { RouterProvider } from "react-router";
 import { ToastContainer } from 'react-toastify';
+import { HelmetProvider } from 'react-helmet-async';
 
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <LenisProvider>
-                 <RouterProvider router={router} />   
-                </LenisProvider>
-            </AuthProvider>
-        </QueryClientProvider>
-        <ToastContainer />
+        <HelmetProvider>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                    <LenisProvider>
+                     <RouterProvider router={router} />   
+                    </LenisProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+            <ToastContainer />
+        </HelmetProvider>
     </StrictMode>
 );

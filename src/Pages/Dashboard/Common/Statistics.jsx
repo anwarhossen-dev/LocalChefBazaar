@@ -1,7 +1,7 @@
 import React from 'react';
 //import useRole from '../../../hooks/useRole';
 import LoadingSpinner from '../../../Components/Shared/LoadingSpinner';
-import CustomerStatistics from '../../../components/Dashboard/Statistics/CustomerStatistics';
+import CustomerStatistics from '../../../Components/Dashboard/Statistics/CustomerStatistics';
 import SellerStatistics from '../../../Components/Dashboard/Statistics/SellerStatistics';
 import AdminStatistics from '../../../Components/Dashboard/Statistics/AdminStatistics';
 import useRole from '../../../hooks/useRole';
@@ -18,10 +18,10 @@ import useRole from '../../../hooks/useRole';
 // export default Statistics;
 
 
-// import AdminStatistics from '../../../components/Dashboard/Statistics/AdminStatistics'
-// import CustomerStatistics from '../../../components/Dashboard/Statistics/CustomerStatistics'
-// import SellerStatistics from '../../../components/Dashboard/Statistics/SellerStatistics'
-// import LoadingSpinner from '../../../components/Shared/LoadingSpinner'
+// import AdminStatistics from '../../../Components/Dashboard/Statistics/AdminStatistics'
+// import CustomerStatistics from '../../../Components/Dashboard/Statistics/CustomerStatistics'
+// import SellerStatistics from '../../../Components/Dashboard/Statistics/SellerStatistics'
+// import LoadingSpinner from '../../../Components/Shared/LoadingSpinner'
 // import useRole from '../../../hooks/useRole'
 const Statistics = () => {
   const [role, isRoleLoading] = useRole()

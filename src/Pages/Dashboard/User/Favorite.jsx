@@ -7,7 +7,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
-import Loading from "../../components/Shared/Loading";
+import Loading from "../../Components/Shared/Loading";
 import { format } from "date-fns";
 
 const Favorite = () => {

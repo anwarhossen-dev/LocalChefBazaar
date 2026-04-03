@@ -1,5 +1,5 @@
 import React from 'react';
-//import useAuth from '../Hooks/useAuth';
+//import useAuth from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router';
 import LoadingSpinner from '../Components/Shared/LoadingSpinner';
 import useAuth from '../hooks/useAuth';

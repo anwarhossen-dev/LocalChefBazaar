@@ -8,7 +8,7 @@ import { FaStar } from "react-icons/fa";
 import MealReview from "../../Components/Shared/MealReview";
 import ReviewModal from "../../Components/Shared/ReviewModal";
 import useAuth from "../../hooks/useAuth";
-//import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../Components/Shared/Loading";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";

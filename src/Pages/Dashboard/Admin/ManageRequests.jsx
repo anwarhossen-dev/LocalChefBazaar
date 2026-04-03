@@ -3,7 +3,7 @@ import React from 'react';
 
 import Loading from '../../../Components/Shared/Loading';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-//import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+//import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 

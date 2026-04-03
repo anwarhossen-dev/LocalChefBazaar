@@ -1,11 +1,11 @@
 
 
 import React from 'react';
-//import useAuth from '../../../Hooks/useAuth';
-//import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+//import useAuth from '../../../hooks/useAuth';
+//import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 

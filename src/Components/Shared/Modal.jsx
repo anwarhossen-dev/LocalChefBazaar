@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/Logo1.png";
-//import useAuth from "../../Hooks/useAuth";
+//import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 

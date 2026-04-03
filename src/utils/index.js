@@ -16,9 +16,9 @@ export const imageUpload = async imageData => {
 
 //save or update user in db
 export const saveOrUpdateUser = async userData =>{
-  const {data } = await axios.post(`${import.meta.env.VITE_API_URL}/users`, 
+  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "https://local-chef-bazaar-server-nu.vercel.app" : "/api");
+  const {data } = await axios.post(`${apiUrl}/users`, 
     userData
-  
   )
 
   return data

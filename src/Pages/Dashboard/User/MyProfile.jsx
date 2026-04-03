@@ -2,8 +2,8 @@
 
 
 import React from "react";
-//import useAuth from "../../Hooks/useAuth";
-//import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAuth from "../../hooks/useAuth";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -147,7 +147,7 @@ export default MyProfile;
 
 
 // import React from "react";
-// import useAuth from "../../../Hooks/useAuth";
+// import useAuth from "../../../hooks/useAuth";
 // import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 // import Loading from "../../../Components/Shared/Loading";

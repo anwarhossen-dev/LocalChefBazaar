@@ -3,7 +3,7 @@ import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ReviewsCard from "./ReviewsCard";
 import { useQuery } from "@tanstack/react-query";
-//import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";

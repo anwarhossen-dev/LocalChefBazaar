@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImage from "../../assets/banner/About121.jpg";
+import bannerImage from "../../assets/Banner/About121.jpg";
 
 const HeroOverlay = () => {
     return (

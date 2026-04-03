@@ -7,7 +7,7 @@ import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 import SearchNotFound from "../../Components/Shared/SearchNotFound";
 import Card from "../../Components/Home/Card";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-//import useAxiosSecure from "../../Hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Meals = () => {
   const [search, setSearch] = useState("");

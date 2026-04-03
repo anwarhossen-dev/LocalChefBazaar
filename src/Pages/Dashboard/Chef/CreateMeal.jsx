@@ -1,8 +1,8 @@
 
 import Swal from "sweetalert2";
 
-//import useAuth from "../../../Hooks/useAuth";
-//import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+//import useAuth from "../../../hooks/useAuth";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
