@@ -130,9 +130,9 @@ const MyProfile = () => {
                                     onClick={() => handleRequest("admin")}
                                     disabled={requestedType === "admin" && requestStatus === "pending"}
                                     className={`px-4 py-2 text-sm sm:text-base rounded transition duration-300 
-                                ${requestedType === "admin" && requestStatus === "pending" ? "bg-gray-400 text-white cursor-not-allowed" : "bg-secondary hover:bg-secondary/80 hover:scale-105"}`}
+                                ${requestedType === "admin" && requestStatus === "pending" ? "bg-gray-400 text-white cursor-not-allowed" : "bg-accent hover:bg-accent/80 hover:scale-105"}`}
                                 >
-                                    {requestedType === "admin" && requestStatus === "pending" ? "Requested" : "Be an Admin"}
+                                    {requestedType === "admin" && requestStatus === "pending" ? "Requested" : "Be and Admin"}
                                 </button>
                             </>
                         )}

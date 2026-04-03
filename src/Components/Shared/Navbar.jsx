@@ -450,7 +450,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="bg-secondary shadow-sm sticky top-0 z-50">
+        <div className="bg-accent shadow-sm sticky top-0 z-50">
             <div className="navbar max-w-7xl mx-auto px-3">
                 {/* LEFT */}
                 <div className="navbar-start flex items-center gap-2">

@@ -128,7 +128,7 @@ const DemoSetup = () => {
             </Button>
             
             {allSetupComplete && (
-              <div className="mt-4 text-accent-200">
+              <div className="mt-4 text-bg-accent-200">
                 🎉 Your demo environment is ready for testing!
               </div>
             )}

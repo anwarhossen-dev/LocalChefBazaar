@@ -17,8 +17,8 @@ const HeroBanner = () => {
     }, []);
 
     return (
-        <section className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-4 sm:gap-6 md:gap-8 py-4 sm:py-6 md:py-8 bg-secondary rounded-xl">
+        <section className="max-w-7xl mx-auto px-4 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-4 sm:gap-6 md:gap-8 py-4 sm:py-6 md:py-8 bg-accent rounded-xl">
                 {/* ✅ Left Side — Text */}
                 <div className="space-y-3 sm:space-y-4 md:space-y-6 px-4 sm:px-6">
                     <div className="bg-green-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full inline-block font-semibold text-xs sm:text-sm">GRAND VEGGIE eat clean & Fresh</div>

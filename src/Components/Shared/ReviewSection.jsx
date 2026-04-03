@@ -20,7 +20,7 @@ const ReviewSection = () => {
     });
 
     return (
-        <div className="max-w-6xl mx-auto px-4 mb-10">
+        <div className="max-w-6xl mx-auto px-4 mb-10 ">
             <h2 className="text-4xl text-center font-bold mb-4">What our customers are saying</h2>
             <p className="text-sm text-center mb-8">Enhance posture, mobility, and well-being effortlessly with Posture Pro. Achieve proper alignment, reduce pain, and strengthen your body with ease!</p>
 
