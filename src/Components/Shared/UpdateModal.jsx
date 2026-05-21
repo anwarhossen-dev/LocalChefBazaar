@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const UpdateModal = ({ isOpen, onClose, meal, refetch }) => {
     const axiosSecure = useAxiosSecure();
@@ -11,7 +12,13 @@ const UpdateModal = ({ isOpen, onClose, meal, refetch }) => {
 
     const [newImageFile, setNewImageFile] = useState(null);
     const [preview, setPreview] = useState("");
+    const [prevMealId, setPrevMealId] = useState(null);
 
+    if (meal && meal._id !== prevMealId) {
+        setPrevMealId(meal._id);
+        setPreview(meal.foodImage || "");
+        setNewImageFile(null);
+    }
     
     useEffect(() => {
         if (meal) {
@@ -24,9 +31,6 @@ const UpdateModal = ({ isOpen, onClose, meal, refetch }) => {
                 chefExperience: meal.chefExperience,
                 deliveryArea: meal.deliveryArea,
             });
-
-            setPreview(meal.foodImage || "");
-            setNewImageFile(null);
         }
     }, [meal, reset]);
 

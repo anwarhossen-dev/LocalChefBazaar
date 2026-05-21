@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaPlus, FaMinus, FaTrash, FaCashRegister, FaCreditCard, FaReceipt, FaSearch } from 'react-icons/fa';
 import { MdPayment, MdDiscount } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -25,11 +25,11 @@ const POSSystem = () => {
 
     const categories = ['all', 'burgers', 'pizza', 'salads', 'seafood', 'pasta', 'desserts', 'beverages', 'sides'];
 
-    const tables = Array.from({ length: 20 }, (_, i) => ({
+    const [tables] = useState(() => Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
         status: Math.random() > 0.7 ? 'occupied' : 'available',
         capacity: Math.floor(Math.random() * 6) + 2
-    }));
+    })));
 
     const addToCart = (item) => {
         const existingItem = cart.find(cartItem => cartItem.id === item.id);

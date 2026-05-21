@@ -7,8 +7,9 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Shared/Loading";
 import Swal from "sweetalert2";
 import UpdateModal from "../../../Components/Shared/UpdateModal";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyMeals = () => {
     const axiosSecure = useAxiosSecure();

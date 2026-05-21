@@ -6,11 +6,12 @@ import React from "react";
 //import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Components/Shared/Loading";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyProfile = () => {
     const { user } = useAuth();

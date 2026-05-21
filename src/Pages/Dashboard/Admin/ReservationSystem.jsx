@@ -1,11 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaCalendarAlt, FaUsers, FaClock, FaPhone, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { MdEventSeat, MdRestaurant } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoReservations = [
+    {
+        id: 1,
+        customerName: 'John Smith',
+        phone: '+1234567890',
+        email: 'john@email.com',
+        date: new Date().toISOString().split('T')[0],
+        time: '19:00',
+        guests: 4,
+        table: 5,
+        specialRequests: 'Window seat preferred',
+        status: 'confirmed',
+        createdAt: new Date()
+    },
+    {
+        id: 2,
+        customerName: 'Sarah Johnson',
+        phone: '+1234567891',
+        email: 'sarah@email.com',
+        date: new Date().toISOString().split('T')[0],
+        time: '20:30',
+        guests: 2,
+        table: 8,
+        specialRequests: 'Anniversary dinner',
+        status: 'confirmed',
+        createdAt: new Date()
+    }
+];
+
 const ReservationSystem = () => {
-    const [reservations, setReservations] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+    const [reservations, setReservations] = useState(demoReservations);
+    const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add');
     const [selectedReservation, setSelectedReservation] = useState(null);
@@ -20,39 +49,6 @@ const ReservationSystem = () => {
         specialRequests: '',
         status: 'confirmed'
     });
-
-    // Demo reservations
-    useEffect(() => {
-        const demoReservations = [
-            {
-                id: 1,
-                customerName: 'John Smith',
-                phone: '+1234567890',
-                email: 'john@email.com',
-                date: new Date().toISOString().split('T')[0],
-                time: '19:00',
-                guests: 4,
-                table: 5,
-                specialRequests: 'Window seat preferred',
-                status: 'confirmed',
-                createdAt: new Date()
-            },
-            {
-                id: 2,
-                customerName: 'Sarah Johnson',
-                phone: '+1234567891',
-                email: 'sarah@email.com',
-                date: new Date().toISOString().split('T')[0],
-                time: '20:30',
-                guests: 2,
-                table: 8,
-                specialRequests: 'Anniversary dinner',
-                status: 'confirmed',
-                createdAt: new Date()
-            }
-        ];
-        setReservations(demoReservations);
-    }, []);
 
     const getStatusColor = (status) => {
         switch (status) {

@@ -3,8 +3,53 @@ import { FaClock, FaCheck, FaPlay, FaPause, FaUtensils, FaFire } from 'react-ico
 import { MdKitchen, MdTimer, MdRestaurant } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoOrders = [
+    {
+        id: 1,
+        orderNumber: 'ORD-001',
+        table: 5,
+        items: [
+            { name: 'Grilled Chicken', station: 'grill', prepTime: 15, status: 'preparing' },
+            { name: 'Caesar Salad', station: 'salad', prepTime: 5, status: 'ready' }
+        ],
+        priority: 'high',
+        orderTime: new Date(Date.now() - 10 * 60000), // 10 minutes ago
+        estimatedTime: 20,
+        chef: 'John Doe',
+        status: 'preparing'
+    },
+    {
+        id: 2,
+        orderNumber: 'ORD-002',
+        table: 3,
+        items: [
+            { name: 'Margherita Pizza', station: 'pizza', prepTime: 12, status: 'preparing' },
+            { name: 'Garlic Bread', station: 'grill', prepTime: 8, status: 'pending' }
+        ],
+        priority: 'medium',
+        orderTime: new Date(Date.now() - 5 * 60000), // 5 minutes ago
+        estimatedTime: 15,
+        chef: 'Jane Smith',
+        status: 'pending'
+    },
+    {
+        id: 3,
+        orderNumber: 'ORD-003',
+        table: 8,
+        items: [
+            { name: 'Chocolate Cake', station: 'dessert', prepTime: 3, status: 'ready' },
+            { name: 'Coffee', station: 'beverage', prepTime: 2, status: 'ready' }
+        ],
+        priority: 'low',
+        orderTime: new Date(Date.now() - 15 * 60000), // 15 minutes ago
+        estimatedTime: 5,
+        chef: 'Mike Johnson',
+        status: 'ready'
+    }
+];
+
 const KitchenManagement = () => {
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState(demoOrders);
     const [selectedStation, setSelectedStation] = useState('all');
     const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -17,55 +62,6 @@ const KitchenManagement = () => {
         { id: 'dessert', name: 'Dessert Station', color: 'info' },
         { id: 'beverage', name: 'Beverage Station', color: 'accent' }
     ];
-
-    // Demo kitchen orders
-    useEffect(() => {
-        const demoOrders = [
-            {
-                id: 1,
-                orderNumber: 'ORD-001',
-                table: 5,
-                items: [
-                    { name: 'Grilled Chicken', station: 'grill', prepTime: 15, status: 'preparing' },
-                    { name: 'Caesar Salad', station: 'salad', prepTime: 5, status: 'ready' }
-                ],
-                priority: 'high',
-                orderTime: new Date(Date.now() - 10 * 60000), // 10 minutes ago
-                estimatedTime: 20,
-                chef: 'John Doe',
-                status: 'preparing'
-            },
-            {
-                id: 2,
-                orderNumber: 'ORD-002',
-                table: 3,
-                items: [
-                    { name: 'Margherita Pizza', station: 'pizza', prepTime: 12, status: 'preparing' },
-                    { name: 'Garlic Bread', station: 'grill', prepTime: 8, status: 'pending' }
-                ],
-                priority: 'medium',
-                orderTime: new Date(Date.now() - 5 * 60000), // 5 minutes ago
-                estimatedTime: 15,
-                chef: 'Jane Smith',
-                status: 'pending'
-            },
-            {
-                id: 3,
-                orderNumber: 'ORD-003',
-                table: 8,
-                items: [
-                    { name: 'Chocolate Cake', station: 'dessert', prepTime: 3, status: 'ready' },
-                    { name: 'Coffee', station: 'beverage', prepTime: 2, status: 'ready' }
-                ],
-                priority: 'low',
-                orderTime: new Date(Date.now() - 15 * 60000), // 15 minutes ago
-                estimatedTime: 5,
-                chef: 'Mike Johnson',
-                status: 'ready'
-            }
-        ];
-        setOrders(demoOrders);
-    }, []);
 
     // Update current time every second
     useEffect(() => {

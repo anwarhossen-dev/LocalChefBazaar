@@ -1,10 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaUsers, FaClock, FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import { MdTableRestaurant, MdCleaningServices, MdEventSeat } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 const TablesManagement = () => {
-    const [tables, setTables] = useState([]);
+    const [tables, setTables] = useState(() => Array.from({ length: 24 }, (_, i) => ({
+        id: i + 1,
+        number: i + 1,
+        capacity: Math.floor(Math.random() * 6) + 2,
+        location: i < 12 ? 'main' : i < 18 ? 'patio' : 'private',
+        status: ['available', 'occupied', 'reserved', 'cleaning'][Math.floor(Math.random() * 4)],
+        currentGuests: Math.random() > 0.5 ? Math.floor(Math.random() * 4) + 1 : 0,
+        reservedBy: Math.random() > 0.7 ? 'John Doe' : null,
+        reservedTime: Math.random() > 0.7 ? new Date(Date.now() + Math.random() * 3600000) : null,
+        occupiedSince: Math.random() > 0.6 ? new Date(Date.now() - Math.random() * 7200000) : null,
+        lastCleaned: new Date(Date.now() - Math.random() * 3600000),
+        revenue: Math.random() * 200
+    })));
     const [selectedTable, setSelectedTable] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState(''); // 'add', 'edit', 'reserve'
@@ -14,24 +26,6 @@ const TablesManagement = () => {
         location: 'main',
         status: 'available'
     });
-
-    // Initialize demo tables
-    useEffect(() => {
-        const demoTables = Array.from({ length: 24 }, (_, i) => ({
-            id: i + 1,
-            number: i + 1,
-            capacity: Math.floor(Math.random() * 6) + 2,
-            location: i < 12 ? 'main' : i < 18 ? 'patio' : 'private',
-            status: ['available', 'occupied', 'reserved', 'cleaning'][Math.floor(Math.random() * 4)],
-            currentGuests: Math.random() > 0.5 ? Math.floor(Math.random() * 4) + 1 : 0,
-            reservedBy: Math.random() > 0.7 ? 'John Doe' : null,
-            reservedTime: Math.random() > 0.7 ? new Date(Date.now() + Math.random() * 3600000) : null,
-            occupiedSince: Math.random() > 0.6 ? new Date(Date.now() - Math.random() * 7200000) : null,
-            lastCleaned: new Date(Date.now() - Math.random() * 3600000),
-            revenue: Math.random() * 200
-        }));
-        setTables(demoTables);
-    }, []);
 
     const getStatusColor = (status) => {
         switch (status) {

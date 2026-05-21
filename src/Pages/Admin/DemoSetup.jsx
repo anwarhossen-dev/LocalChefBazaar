@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Settings, Database, Users, Key, CheckCircle, AlertCircle } from 'lucide-react';
 import Container from '../../Components/Shared/Container';
 import Card from '../../Components/UI/Card';
@@ -67,8 +67,7 @@ const DemoSetup = () => {
         default:
           break;
       }
-    } catch (error) {
-      console.error(`Error setting up ${stepId}:`, error);
+    } catch {
       toast.error(`Failed to setup ${stepId}`);
     } finally {
       setLoading(false);
@@ -87,7 +86,7 @@ const DemoSetup = () => {
       }
       
       toast.success('🎉 Complete demo setup finished!');
-    } catch (error) {
+    } catch {
       toast.error('Setup failed. Please try individual steps.');
     } finally {
       setLoading(false);
@@ -137,7 +136,7 @@ const DemoSetup = () => {
 
         {/* Setup Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {setupSteps.map((step, index) => (
+          {setupSteps.map((step, _index) => (
             <Card key={step.id} className="text-center hover:shadow-lg transition-all duration-300">
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
                 setupStatus[step.id] 

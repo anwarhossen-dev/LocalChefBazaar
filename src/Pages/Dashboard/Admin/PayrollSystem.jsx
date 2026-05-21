@@ -1,10 +1,93 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaMoneyBillWave, FaCalculator, FaDownload, FaEye, FaUsers } from 'react-icons/fa';
 import { MdPayment, MdSchedule, MdAccountBalance } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoEmployees = [
+    {
+        id: 1,
+        name: 'John Doe',
+        employeeId: 'EMP001',
+        position: 'Head Chef',
+        department: 'Kitchen',
+        baseSalary: 5000,
+        hourlyRate: 25,
+        hoursWorked: 160,
+        overtimeHours: 12,
+        bonuses: 500,
+        deductions: {
+            tax: 750,
+            insurance: 200,
+            retirement: 300,
+            other: 50
+        },
+        bankAccount: '****1234',
+        status: 'active'
+    },
+    {
+        id: 2,
+        name: 'Jane Smith',
+        employeeId: 'EMP002',
+        position: 'Restaurant Manager',
+        department: 'Management',
+        baseSalary: 6000,
+        hourlyRate: 30,
+        hoursWorked: 160,
+        overtimeHours: 8,
+        bonuses: 800,
+        deductions: {
+            tax: 900,
+            insurance: 250,
+            retirement: 360,
+            other: 0
+        },
+        bankAccount: '****5678',
+        status: 'active'
+    },
+    {
+        id: 3,
+        name: 'Mike Johnson',
+        employeeId: 'EMP003',
+        position: 'Waiter',
+        department: 'Service',
+        baseSalary: 2500,
+        hourlyRate: 15,
+        hoursWorked: 160,
+        overtimeHours: 20,
+        bonuses: 300,
+        deductions: {
+            tax: 420,
+            insurance: 150,
+            retirement: 150,
+            other: 25
+        },
+        bankAccount: '****9012',
+        status: 'active'
+    },
+    {
+        id: 4,
+        name: 'Sarah Wilson',
+        employeeId: 'EMP004',
+        position: 'Bartender',
+        department: 'Bar',
+        baseSalary: 3000,
+        hourlyRate: 18,
+        hoursWorked: 160,
+        overtimeHours: 15,
+        bonuses: 400,
+        deductions: {
+            tax: 510,
+            insurance: 180,
+            retirement: 180,
+            other: 30
+        },
+        bankAccount: '****3456',
+        status: 'active'
+    }
+];
+
 const PayrollSystem = () => {
-    const [employees, setEmployees] = useState([]);
+    const [employees] = useState(demoEmployees);
     const [payrollPeriod, setPayrollPeriod] = useState({
         startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
         endDate: new Date().toISOString().split('T')[0]
@@ -12,93 +95,6 @@ const PayrollSystem = () => {
     const [showPayslipModal, setShowPayslipModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [payrollStatus, setPayrollStatus] = useState('draft'); // draft, calculated, processed
-
-    // Demo employees data
-    useEffect(() => {
-        const demoEmployees = [
-            {
-                id: 1,
-                name: 'John Doe',
-                employeeId: 'EMP001',
-                position: 'Head Chef',
-                department: 'Kitchen',
-                baseSalary: 5000,
-                hourlyRate: 25,
-                hoursWorked: 160,
-                overtimeHours: 12,
-                bonuses: 500,
-                deductions: {
-                    tax: 750,
-                    insurance: 200,
-                    retirement: 300,
-                    other: 50
-                },
-                bankAccount: '****1234',
-                status: 'active'
-            },
-            {
-                id: 2,
-                name: 'Jane Smith',
-                employeeId: 'EMP002',
-                position: 'Restaurant Manager',
-                department: 'Management',
-                baseSalary: 6000,
-                hourlyRate: 30,
-                hoursWorked: 160,
-                overtimeHours: 8,
-                bonuses: 800,
-                deductions: {
-                    tax: 900,
-                    insurance: 250,
-                    retirement: 360,
-                    other: 0
-                },
-                bankAccount: '****5678',
-                status: 'active'
-            },
-            {
-                id: 3,
-                name: 'Mike Johnson',
-                employeeId: 'EMP003',
-                position: 'Waiter',
-                department: 'Service',
-                baseSalary: 2500,
-                hourlyRate: 15,
-                hoursWorked: 160,
-                overtimeHours: 20,
-                bonuses: 300,
-                deductions: {
-                    tax: 420,
-                    insurance: 150,
-                    retirement: 150,
-                    other: 25
-                },
-                bankAccount: '****9012',
-                status: 'active'
-            },
-            {
-                id: 4,
-                name: 'Sarah Wilson',
-                employeeId: 'EMP004',
-                position: 'Bartender',
-                department: 'Bar',
-                baseSalary: 3000,
-                hourlyRate: 18,
-                hoursWorked: 160,
-                overtimeHours: 15,
-                bonuses: 400,
-                deductions: {
-                    tax: 510,
-                    insurance: 180,
-                    retirement: 180,
-                    other: 30
-                },
-                bankAccount: '****3456',
-                status: 'active'
-            }
-        ];
-        setEmployees(demoEmployees);
-    }, []);
 
     const calculatePayroll = (employee) => {
         const regularPay = employee.baseSalary || (employee.hourlyRate * employee.hoursWorked);

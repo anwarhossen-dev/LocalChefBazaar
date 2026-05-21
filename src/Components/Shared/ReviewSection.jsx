@@ -7,7 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 
 const ReviewSection = () => {
     const axiosPublic = useAxiosSecure();

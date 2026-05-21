@@ -8,6 +8,8 @@ import SearchNotFound from "../../Components/Shared/SearchNotFound";
 import Card from "../../Components/Home/Card";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 //import useAxiosSecure from "../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Meals = () => {
   const [search, setSearch] = useState("");
@@ -52,9 +54,13 @@ const Meals = () => {
   const currentMeals = sortedMeals.slice(startIndex, endIndex);
 
   // reset page when search/sort changes
-  useEffect(() => {
+  const [prevSearch, setPrevSearch] = useState(search);
+  const [prevSort, setPrevSort] = useState(sort);
+  if (search !== prevSearch || sort !== prevSort) {
+    setPrevSearch(search);
+    setPrevSort(sort);
     setPage(1);
-  }, [search, sort]);
+  }
 
   return (
     <div className="w-11/12 mx-auto">

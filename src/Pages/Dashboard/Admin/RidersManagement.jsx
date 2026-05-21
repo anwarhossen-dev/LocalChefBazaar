@@ -1,11 +1,108 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaMotorcycle, FaPlus, FaEdit, FaTrash, FaPhone, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 import { MdDeliveryDining, MdGpsFixed, MdPayment } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoRiders = [
+    {
+        id: 1,
+        name: 'Alex Rodriguez',
+        phone: '+1-555-0201',
+        email: 'alex.r@delivery.com',
+        vehicleType: 'motorcycle',
+        vehicleNumber: 'DL-1234',
+        licenseNumber: 'LIC123456',
+        status: 'busy',
+        commissionRate: 15,
+        rating: 4.8,
+        totalDeliveries: 234,
+        completedToday: 12,
+        earnings: 1890.50,
+        currentLocation: { lat: 40.7128, lng: -74.0060 },
+        joinDate: '2023-01-15',
+        currentDelivery: {
+            orderId: 'ORD-001',
+            customer: 'John Smith',
+            address: '123 Main St',
+            estimatedTime: 15
+        }
+    },
+    {
+        id: 2,
+        name: 'Maria Garcia',
+        phone: '+1-555-0202',
+        email: 'maria.g@delivery.com',
+        vehicleType: 'bicycle',
+        vehicleNumber: 'BC-5678',
+        licenseNumber: 'LIC789012',
+        status: 'available',
+        commissionRate: 18,
+        rating: 4.9,
+        totalDeliveries: 189,
+        completedToday: 8,
+        earnings: 1456.75,
+        currentLocation: { lat: 40.7589, lng: -73.9851 },
+        joinDate: '2023-02-20',
+        currentDelivery: null
+    },
+    {
+        id: 3,
+        name: 'David Chen',
+        phone: '+1-555-0203',
+        email: 'david.c@delivery.com',
+        vehicleType: 'scooter',
+        vehicleNumber: 'SC-9012',
+        licenseNumber: 'LIC345678',
+        status: 'available',
+        commissionRate: 16,
+        rating: 4.7,
+        totalDeliveries: 156,
+        completedToday: 6,
+        earnings: 1234.25,
+        currentLocation: { lat: 40.7505, lng: -73.9934 },
+        joinDate: '2023-03-10',
+        currentDelivery: null
+    },
+    {
+        id: 4,
+        name: 'Sarah Johnson',
+        phone: '+1-555-0204',
+        email: 'sarah.j@delivery.com',
+        vehicleType: 'car',
+        vehicleNumber: 'CAR-3456',
+        licenseNumber: 'LIC901234',
+        status: 'break',
+        commissionRate: 12,
+        rating: 4.6,
+        totalDeliveries: 98,
+        completedToday: 4,
+        earnings: 987.60,
+        currentLocation: { lat: 40.7282, lng: -73.7949 },
+        joinDate: '2023-04-01',
+        currentDelivery: null
+    }
+];
+
+const demoDeliveries = [
+    {
+        id: 1,
+        orderId: 'ORD-001',
+        riderId: 1,
+        customer: 'John Smith',
+        customerPhone: '+1-555-1001',
+        pickupAddress: 'Restaurant Main Branch',
+        deliveryAddress: '123 Main St, Anytown',
+        orderValue: 45.50,
+        deliveryFee: 5.99,
+        estimatedTime: 15,
+        status: 'picked_up',
+        startTime: new Date(Date.now() - 10 * 60000) // 10 minutes ago
+    }
+];
+
 const RidersManagement = () => {
-    const [riders, setRiders] = useState([]);
-    const [activeDeliveries, setActiveDeliveries] = useState([]);
+    const [riders, setRiders] = useState(demoRiders);
+    const [activeDeliveries] = useState(demoDeliveries);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add');
     const [selectedRider, setSelectedRider] = useState(null);
@@ -22,109 +119,6 @@ const RidersManagement = () => {
 
     const vehicleTypes = ['motorcycle', 'bicycle', 'car', 'scooter'];
     const statusOptions = ['available', 'busy', 'offline', 'break'];
-
-    // Demo riders data
-    useEffect(() => {
-        const demoRiders = [
-            {
-                id: 1,
-                name: 'Alex Rodriguez',
-                phone: '+1-555-0201',
-                email: 'alex.r@delivery.com',
-                vehicleType: 'motorcycle',
-                vehicleNumber: 'DL-1234',
-                licenseNumber: 'LIC123456',
-                status: 'busy',
-                commissionRate: 15,
-                rating: 4.8,
-                totalDeliveries: 234,
-                completedToday: 12,
-                earnings: 1890.50,
-                currentLocation: { lat: 40.7128, lng: -74.0060 },
-                joinDate: '2023-01-15',
-                currentDelivery: {
-                    orderId: 'ORD-001',
-                    customer: 'John Smith',
-                    address: '123 Main St',
-                    estimatedTime: 15
-                }
-            },
-            {
-                id: 2,
-                name: 'Maria Garcia',
-                phone: '+1-555-0202',
-                email: 'maria.g@delivery.com',
-                vehicleType: 'bicycle',
-                vehicleNumber: 'BC-5678',
-                licenseNumber: 'LIC789012',
-                status: 'available',
-                commissionRate: 18,
-                rating: 4.9,
-                totalDeliveries: 189,
-                completedToday: 8,
-                earnings: 1456.75,
-                currentLocation: { lat: 40.7589, lng: -73.9851 },
-                joinDate: '2023-02-20',
-                currentDelivery: null
-            },
-            {
-                id: 3,
-                name: 'David Chen',
-                phone: '+1-555-0203',
-                email: 'david.c@delivery.com',
-                vehicleType: 'scooter',
-                vehicleNumber: 'SC-9012',
-                licenseNumber: 'LIC345678',
-                status: 'available',
-                commissionRate: 16,
-                rating: 4.7,
-                totalDeliveries: 156,
-                completedToday: 6,
-                earnings: 1234.25,
-                currentLocation: { lat: 40.7505, lng: -73.9934 },
-                joinDate: '2023-03-10',
-                currentDelivery: null
-            },
-            {
-                id: 4,
-                name: 'Sarah Johnson',
-                phone: '+1-555-0204',
-                email: 'sarah.j@delivery.com',
-                vehicleType: 'car',
-                vehicleNumber: 'CAR-3456',
-                licenseNumber: 'LIC901234',
-                status: 'break',
-                commissionRate: 12,
-                rating: 4.6,
-                totalDeliveries: 98,
-                completedToday: 4,
-                earnings: 987.60,
-                currentLocation: { lat: 40.7282, lng: -73.7949 },
-                joinDate: '2023-04-01',
-                currentDelivery: null
-            }
-        ];
-        setRiders(demoRiders);
-
-        // Demo active deliveries
-        const demoDeliveries = [
-            {
-                id: 1,
-                orderId: 'ORD-001',
-                riderId: 1,
-                customer: 'John Smith',
-                customerPhone: '+1-555-1001',
-                pickupAddress: 'Restaurant Main Branch',
-                deliveryAddress: '123 Main St, Anytown',
-                orderValue: 45.50,
-                deliveryFee: 5.99,
-                estimatedTime: 15,
-                status: 'picked_up',
-                startTime: new Date(Date.now() - 10 * 60000) // 10 minutes ago
-            }
-        ];
-        setActiveDeliveries(demoDeliveries);
-    }, []);
 
     const openModal = (type, rider = null) => {
         setModalType(type);
@@ -238,7 +232,6 @@ const RidersManagement = () => {
     const availableRiders = riders.filter(r => r.status === 'available').length;
     const busyRiders = riders.filter(r => r.status === 'busy').length;
     const totalEarnings = riders.reduce((sum, r) => sum + r.earnings, 0);
-    const avgRating = riders.length > 0 ? riders.reduce((sum, r) => sum + r.rating, 0) / riders.length : 0;
 
     return (
         <div className="min-h-screen bg-base-100 p-4">

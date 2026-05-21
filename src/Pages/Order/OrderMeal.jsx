@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useQuery } from "@tanstack/react-query";
 // import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 //import useAuth from '../../hooks/useAuth';
 //import AppLoading from '../Shared/AppLoading';
 import Swal from 'sweetalert2';
@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import useAuth from '../../hooks/useAuth';
 import AppLoading from '../../Components/Shared/AppLoading';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+//import useAxiosSecure from '../../hooks/useAxiosSecure';
 const OrderMeal = () => {
     const {id} = useParams()
     const {user} = useAuth();
@@ -22,7 +23,7 @@ const OrderMeal = () => {
             return res.data
         }
     })
-    const { register, handleSubmit,watch, reset } = useForm();
+    const { register, handleSubmit, control, reset } = useForm();
 
     useEffect(() => {
         if(meal && user){
@@ -39,7 +40,11 @@ const OrderMeal = () => {
         }
     },[meal, user, reset])
 
-    const quantity = watch("quantity")
+    const quantity = useWatch({
+        control,
+        name: "quantity",
+        defaultValue: 1
+    })
     const totalPrice = meal?.price * quantity;
     const orderSubmit = async (data) => {
         Swal.fire({

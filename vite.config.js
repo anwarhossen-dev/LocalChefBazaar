@@ -12,15 +12,15 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: true,
-        configure: (proxy, options) => {
-          proxy.on('error', (err, req, res) => {
-            console.log('Proxy error:', err);
+        configure: (proxy, _options) => {
+          proxy.on('error', (_err, _req, _res) => {
+            console.log('proxy error', _err);
           });
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            console.log('Sending Request to the Target:', req.method, req.url);
+          proxy.on('proxyReq', (_proxyReq, _req, _res) => {
+            console.log('Sending Request to the Target:', _req.method, _req.url);
           });
-          proxy.on('proxyRes', (proxyRes, req, res) => {
-            console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+          proxy.on('proxyRes', (_proxyRes, _req, _res) => {
+            console.log('Received Response from the Target:', _proxyRes.statusCode, _req.url);
           });
         },
       }

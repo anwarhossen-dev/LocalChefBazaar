@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaStar, FaEdit, FaTrash, FaRegCalendarAlt, FaUtensils } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 import Container from "../../../Components/Shared/Container";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyReview = () => {
     const axiosSecure = useAxiosSecure();
@@ -84,7 +85,7 @@ const MyReview = () => {
 
     return (
         <Container>
-            <motion.div 
+            <Motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -130,7 +131,7 @@ const MyReview = () => {
                                 <tbody>
                                     <AnimatePresence>
                                         {myReview.map((review, index) => (
-                                            <motion.tr 
+                                            <Motion.tr 
                                                 key={review._id}
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
@@ -176,7 +177,7 @@ const MyReview = () => {
                                                         </button>
                                                     </div>
                                                 </td>
-                                            </motion.tr>
+                                            </Motion.tr>
                                         ))}
                                     </AnimatePresence>
                                 </tbody>
@@ -245,7 +246,7 @@ const MyReview = () => {
                         <button onClick={() => { reset(); setEditingReview(null); }}>close</button>
                     </form>
                 </dialog>
-            </motion.div>
+            </Motion.div>
         </Container>
     );
 };

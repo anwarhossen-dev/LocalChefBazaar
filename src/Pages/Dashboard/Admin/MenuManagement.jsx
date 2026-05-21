@@ -1,11 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaUtensils, FaPlus, FaEdit, FaTrash, FaEye, FaEyeSlash, FaImage } from 'react-icons/fa';
 import { MdRestaurantMenu, MdCategory } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoCategories = [
+    { id: 1, name: 'Appetizers', description: 'Start your meal right', active: true },
+    { id: 2, name: 'Main Course', description: 'Hearty main dishes', active: true },
+    { id: 3, name: 'Desserts', description: 'Sweet endings', active: true },
+    { id: 4, name: 'Beverages', description: 'Refreshing drinks', active: true },
+    { id: 5, name: 'Salads', description: 'Fresh and healthy', active: true }
+];
+
+const demoMenuItems = [
+    {
+        id: 1,
+        name: 'Grilled Chicken Caesar Salad',
+        description: 'Fresh romaine lettuce with grilled chicken, parmesan cheese, and caesar dressing',
+        price: 14.99,
+        category: 'Salads',
+        ingredients: 'Romaine lettuce, Grilled chicken, Parmesan cheese, Caesar dressing, Croutons',
+        allergens: 'Dairy, Gluten',
+        calories: 420,
+        prepTime: 12,
+        isVegetarian: false,
+        isVegan: false,
+        isGlutenFree: false,
+        isSpicy: false,
+        isAvailable: true,
+        isPopular: true,
+        image: ''
+    },
+    {
+        id: 2,
+        name: 'Margherita Pizza',
+        description: 'Classic pizza with fresh mozzarella, tomato sauce, and basil',
+        price: 16.99,
+        category: 'Main Course',
+        ingredients: 'Pizza dough, Tomato sauce, Mozzarella, Fresh basil, Olive oil',
+        allergens: 'Gluten, Dairy',
+        calories: 680,
+        prepTime: 18,
+        isVegetarian: true,
+        isVegan: false,
+        isGlutenFree: false,
+        isSpicy: false,
+        isAvailable: true,
+        isPopular: true,
+        image: ''
+    },
+    {
+        id: 3,
+        name: 'Chocolate Lava Cake',
+        description: 'Warm chocolate cake with molten center, served with vanilla ice cream',
+        price: 8.99,
+        category: 'Desserts',
+        ingredients: 'Dark chocolate, Butter, Eggs, Sugar, Flour, Vanilla ice cream',
+        allergens: 'Gluten, Dairy, Eggs',
+        calories: 520,
+        prepTime: 8,
+        isVegetarian: true,
+        isVegan: false,
+        isGlutenFree: false,
+        isSpicy: false,
+        isAvailable: true,
+        isPopular: false,
+        image: ''
+    }
+];
+
 const MenuManagement = () => {
-    const [menuItems, setMenuItems] = useState([]);
-    const [categories, setCategories] = useState([]);
+    const [menuItems, setMenuItems] = useState(demoMenuItems);
+    const [categories] = useState(demoCategories);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add');
@@ -27,79 +92,6 @@ const MenuManagement = () => {
         isPopular: false,
         image: ''
     });
-
-    // Demo categories
-    useEffect(() => {
-        const demoCategories = [
-            { id: 1, name: 'Appetizers', description: 'Start your meal right', active: true },
-            { id: 2, name: 'Main Course', description: 'Hearty main dishes', active: true },
-            { id: 3, name: 'Desserts', description: 'Sweet endings', active: true },
-            { id: 4, name: 'Beverages', description: 'Refreshing drinks', active: true },
-            { id: 5, name: 'Salads', description: 'Fresh and healthy', active: true }
-        ];
-        setCategories(demoCategories);
-    }, []);
-
-    // Demo menu items
-    useEffect(() => {
-        const demoMenuItems = [
-            {
-                id: 1,
-                name: 'Grilled Chicken Caesar Salad',
-                description: 'Fresh romaine lettuce with grilled chicken, parmesan cheese, and caesar dressing',
-                price: 14.99,
-                category: 'Salads',
-                ingredients: 'Romaine lettuce, Grilled chicken, Parmesan cheese, Caesar dressing, Croutons',
-                allergens: 'Dairy, Gluten',
-                calories: 420,
-                prepTime: 12,
-                isVegetarian: false,
-                isVegan: false,
-                isGlutenFree: false,
-                isSpicy: false,
-                isAvailable: true,
-                isPopular: true,
-                image: ''
-            },
-            {
-                id: 2,
-                name: 'Margherita Pizza',
-                description: 'Classic pizza with fresh mozzarella, tomato sauce, and basil',
-                price: 16.99,
-                category: 'Main Course',
-                ingredients: 'Pizza dough, Tomato sauce, Mozzarella, Fresh basil, Olive oil',
-                allergens: 'Gluten, Dairy',
-                calories: 680,
-                prepTime: 18,
-                isVegetarian: true,
-                isVegan: false,
-                isGlutenFree: false,
-                isSpicy: false,
-                isAvailable: true,
-                isPopular: true,
-                image: ''
-            },
-            {
-                id: 3,
-                name: 'Chocolate Lava Cake',
-                description: 'Warm chocolate cake with molten center, served with vanilla ice cream',
-                price: 8.99,
-                category: 'Desserts',
-                ingredients: 'Dark chocolate, Butter, Eggs, Sugar, Flour, Vanilla ice cream',
-                allergens: 'Gluten, Dairy, Eggs',
-                calories: 520,
-                prepTime: 8,
-                isVegetarian: true,
-                isVegan: false,
-                isGlutenFree: false,
-                isSpicy: false,
-                isAvailable: true,
-                isPopular: false,
-                image: ''
-            }
-        ];
-        setMenuItems(demoMenuItems);
-    }, []);
 
     const openModal = (type, item = null) => {
         setModalType(type);

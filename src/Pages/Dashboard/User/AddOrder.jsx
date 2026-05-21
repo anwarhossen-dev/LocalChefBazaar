@@ -34,7 +34,8 @@ const AddOrder = () => {
       );
 
       // Redirect to Stripe Checkout
-      window.location.href = res.data.url;
+      const { url } = res.data;
+      window.location.assign(url);
     } catch (err) {
       console.error("Payment redirect error:", err);
     }

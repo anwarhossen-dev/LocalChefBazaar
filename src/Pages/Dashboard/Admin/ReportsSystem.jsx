@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 const ReportsSystem = () => {
     const [selectedReport, setSelectedReport] = useState('sales-summary');
-    const [dateRange, setDateRange] = useState({
+    const [dateRange, setDateRange] = useState(() => ({
         startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         endDate: new Date().toISOString().split('T')[0]
-    });
+    }));
     const [reportData, setReportData] = useState({});
     const [loading, setLoading] = useState(false);
 
@@ -123,7 +123,10 @@ const ReportsSystem = () => {
     };
 
     useEffect(() => {
-        generateReportData(selectedReport);
+        const timer = setTimeout(() => {
+            generateReportData(selectedReport);
+        }, 0);
+        return () => clearTimeout(timer);
     }, [selectedReport, dateRange]);
 
     const exportReport = (format) => {

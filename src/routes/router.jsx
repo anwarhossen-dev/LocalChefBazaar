@@ -134,6 +134,7 @@ import Register from "../Pages/Shared/Register/Register";
 import Login from "../Pages/Shared/Login/Login";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import AboutUs from "../Pages/AboutUs/AboutUs";
+import Blog from "../Pages/Blog/Blog";
 import MainLayout from "../layouts/MainLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../Pages/Dashboard/User/MyProfile";
@@ -187,6 +188,11 @@ export const router = createBrowserRouter([
             {
                 path: "aboutUs",
                 element: <AboutUs/>,
+                errorElement: <Error500 />,
+            },
+            {
+                path: "blog",
+                element: <Blog />,
                 errorElement: <Error500 />,
             },
             {

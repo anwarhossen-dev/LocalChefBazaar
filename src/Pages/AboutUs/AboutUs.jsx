@@ -2,58 +2,87 @@ import React from "react";
 import MissionSection from "../../Components/Shared/MissionSection";
 import MissionSection2 from "../../Components/Shared/MissionSuccess2";
 import FoodProcessSection from "../../Components/Shared/FoodProcessSection";
+import SectionHeader from "../../Components/UI/Primitives/SectionHeader";
+import AboutUsOrchestrator from "../../Components/Dashboard/AboutUs/AboutUsOrchestrator";
+import Container from "../../Components/Shared/Container";
+import { motion as Motion } from "framer-motion";
 
 const AboutUs = () => {
     return (
-        <div className="max-w-7xl mx-auto px-4 space-y-8 sm:space-y-10 md:space-y-12">
-            <h3 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold mt-4 sm:mt-6">About Us</h3>
-            <div className="rounded-xl">
-                <MissionSection />
-            </div>
+        <AboutUsOrchestrator>
+            {({ data }) => (
+                <div className="min-h-screen bg-white">
+                    {/* Hero Header */}
+                    <div className="bg-slate-50 py-16 md:py-24 mb-16">
+                        <Container>
+                            <SectionHeader 
+                                title="Our Culinary" 
+                                highlight="Journey & Vision" 
+                                subtitle="At Local Chef Bazaar, we're not just about food; we're about the people, the passion, and the community that makes every meal a masterpiece."
+                            />
+                        </Container>
+                    </div>
 
-            <div className="space-y-4 sm:space-y-5 text-center md:text-left px-2 sm:px-4">
-                <div>
-                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug">
-                        We make a small, intimate, and inviting <br className="hidden md:block" />
-                        space for an unforgettable meal
-                    </h2>
+                    <Container className="space-y-24 pb-24">
+                        {/* Vision Section */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            <div className="order-2 lg:order-1">
+                                <SectionHeader 
+                                    align="left"
+                                    title={data.vision.title}
+                                    highlight={data.vision.highlight}
+                                    subtitle={data.vision.subtitle}
+                                />
+                            </div>
+                            <Motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                className="order-1 lg:order-2 rounded-[3rem] overflow-hidden shadow-2xl"
+                            >
+                                <MissionSection />
+                            </Motion.div>
+                        </div>
+
+                        {/* Mission Section */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            <Motion.div 
+                                initial={{ opacity: 0, x: -40 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                className="rounded-[3rem] overflow-hidden shadow-2xl"
+                            >
+                                <MissionSection2 />
+                            </Motion.div>
+                            <div>
+                                <SectionHeader 
+                                    align="left"
+                                    title={data.mission.title}
+                                    highlight={data.mission.highlight}
+                                    subtitle={data.mission.subtitle}
+                                />
+                                <div className="mt-8 p-6 bg-primary/5 rounded-3xl border border-primary/10">
+                                    <p className="text-slate-600 font-medium italic leading-relaxed">
+                                        "Our plant-forward menu means that we're already on average 30% less carbon intensive than the average American meal."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Process Section */}
+                        <div className="pt-16 border-t border-slate-100">
+                            <div className="text-center mb-16">
+                                <span className="bg-primary/10 text-primary px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">
+                                    The Craft
+                                </span>
+                                <h2 className="text-4xl md:text-5xl font-black text-slate-800 mt-6">How We Make <span className="text-primary">Magic</span></h2>
+                            </div>
+                            <FoodProcessSection />
+                        </div>
+                    </Container>
                 </div>
-
-                <div className="md:ml-8 lg:ml-20">
-                    <h3 className="text-sm sm:text-base md:text-lg font-semibold leading-relaxed opacity-90">
-                        Convert leads into customers and then turn those customers into loyal fans of your <br className="hidden md:block" />
-                        brand by leveraging next-generation automation and AI. Yes, it really can be <br className="hidden md:block" />
-                        automated, and no, you're not dreaming.
-                    </h3>
-                </div>
-            </div>
-
-            <div className="rounded-xl">
-                <MissionSection2 />
-            </div>
-
-            <div className="space-y-4 sm:space-y-5 text-center md:text-left px-2 sm:px-4">
-                <div>
-                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug">
-                        Immerse Yourself in an experience that <br className="hidden md:block" />
-                        transcends the ordinary dining out.
-                    </h2>
-                </div>
-
-                <div className="md:ml-8 lg:ml-20">
-                    <h3 className="text-sm sm:text-base md:text-lg font-semibold leading-relaxed opacity-90">
-                        In a world where the long-and short-term effects of climate change pose major <br className="hidden md:block" />
-                        chalanges for farmers,the need for regenarative food system has never been more <br className="hidden md:block" />
-                        importamnt. That's why we've made a promise to do more for the planet, by taking less.
-                        <br className="hidden md:block" />. Our plant-forward menu means that we're already on average 30% less carbon
-                        <br className="hidden md:block" /> intensive than the average American meal.
-                    </h3>
-                </div>
-            </div>
-            <div>
-                <FoodProcessSection />
-            </div>
-        </div>
+            )}
+        </AboutUsOrchestrator>
     );
 };
 

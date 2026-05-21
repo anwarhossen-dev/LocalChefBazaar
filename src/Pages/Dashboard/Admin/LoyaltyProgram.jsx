@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const LoyaltyProgram = () => {
     // Dummy loyalty data
-    const [loyaltyMembers, setLoyaltyMembers] = useState([
+    const [loyaltyMembers] = useState([
         { id: 1, name: "Alice Johnson", email: "alice@example.com", points: 2450, tier: "Gold", joinedDate: "2023-01-15", lifetimeValue: "$1,245.00" },
         { id: 2, name: "Bob Smith", email: "bob@example.com", points: 820, tier: "Silver", joinedDate: "2023-06-22", lifetimeValue: "$340.50" },
         { id: 3, name: "Charlie Davis", email: "charlie@example.com", points: 5100, tier: "Platinum", joinedDate: "2022-11-05", lifetimeValue: "$2,890.00" },

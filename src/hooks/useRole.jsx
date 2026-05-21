@@ -7,8 +7,11 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { User, Users } from 'lucide-react';
 //import useAuth from './useAuth';
-import useAxiosSecure from './useAxiosSecure';
+// import useAxiosSecure from './useAxiosSecure';
+// import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
 import useAuth from './useAuth';
+import useAxiosSecure from './useAxiosSecure';
+//import useAxiosSecure from './useAxiosSecure';
 
 const useRole = () => {
     const {user} = useAuth();

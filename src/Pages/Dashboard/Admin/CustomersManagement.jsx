@@ -1,10 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaUsers, FaPlus, FaEdit, FaTrash, FaPhone, FaEnvelope, FaStar, FaGift } from 'react-icons/fa';
 import { MdLocationOn, MdCake, MdHistory, MdLoyalty } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoCustomers = [
+    {
+        id: 1,
+        name: 'John Smith',
+        email: 'john.smith@email.com',
+        phone: '+1-555-0123',
+        address: '123 Main St, Anytown, CA 90210',
+        birthday: '1985-06-15',
+        preferences: 'Vegetarian, No spicy food',
+        notes: 'Regular customer, prefers table by window',
+        loyaltyPoints: 1250,
+        totalOrders: 45,
+        totalSpent: 1890.50,
+        lastVisit: '2024-04-01',
+        favoriteItems: ['Caesar Salad', 'Margherita Pizza', 'Chocolate Cake'],
+        status: 'active',
+        tier: 'gold',
+        joinDate: '2023-01-15'
+    },
+    {
+        id: 2,
+        name: 'Sarah Johnson',
+        email: 'sarah.j@email.com',
+        phone: '+1-555-0124',
+        address: '456 Oak Ave, Somewhere, NY 10001',
+        birthday: '1990-12-03',
+        preferences: 'Gluten-free options',
+        notes: 'Allergic to nuts',
+        loyaltyPoints: 890,
+        totalOrders: 28,
+        totalSpent: 1245.75,
+        lastVisit: '2024-03-28',
+        favoriteItems: ['Grilled Salmon', 'Quinoa Salad'],
+        status: 'active',
+        tier: 'silver',
+        joinDate: '2023-03-22'
+    },
+    {
+        id: 3,
+        name: 'Mike Wilson',
+        email: 'mike.wilson@email.com',
+        phone: '+1-555-0125',
+        address: '789 Pine St, Elsewhere, TX 75201',
+        birthday: '1978-09-20',
+        preferences: 'Loves spicy food, Craft beer',
+        notes: 'Celebrates anniversary here every year',
+        loyaltyPoints: 2150,
+        totalOrders: 67,
+        totalSpent: 3456.80,
+        lastVisit: '2024-04-02',
+        favoriteItems: ['Spicy Wings', 'BBQ Ribs', 'IPA Beer'],
+        status: 'active',
+        tier: 'platinum',
+        joinDate: '2022-08-10'
+    },
+    {
+        id: 4,
+        name: 'Emily Davis',
+        email: 'emily.davis@email.com',
+        phone: '+1-555-0126',
+        address: '321 Elm St, Nowhere, FL 33101',
+        birthday: '1995-04-08',
+        preferences: 'Vegan options, Organic ingredients',
+        notes: 'Food blogger, takes photos of meals',
+        loyaltyPoints: 650,
+        totalOrders: 18,
+        totalSpent: 789.25,
+        lastVisit: '2024-03-25',
+        favoriteItems: ['Vegan Burger', 'Organic Salad'],
+        status: 'active',
+        tier: 'bronze',
+        joinDate: '2023-11-05'
+    }
+];
+
 const CustomersManagement = () => {
-    const [customers, setCustomers] = useState([]);
+    const [customers, setCustomers] = useState(demoCustomers);
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add');
@@ -18,85 +93,6 @@ const CustomersManagement = () => {
         preferences: '',
         notes: ''
     });
-
-    // Demo customers data
-    useEffect(() => {
-        const demoCustomers = [
-            {
-                id: 1,
-                name: 'John Smith',
-                email: 'john.smith@email.com',
-                phone: '+1-555-0123',
-                address: '123 Main St, Anytown, CA 90210',
-                birthday: '1985-06-15',
-                preferences: 'Vegetarian, No spicy food',
-                notes: 'Regular customer, prefers table by window',
-                loyaltyPoints: 1250,
-                totalOrders: 45,
-                totalSpent: 1890.50,
-                lastVisit: '2024-04-01',
-                favoriteItems: ['Caesar Salad', 'Margherita Pizza', 'Chocolate Cake'],
-                status: 'active',
-                tier: 'gold',
-                joinDate: '2023-01-15'
-            },
-            {
-                id: 2,
-                name: 'Sarah Johnson',
-                email: 'sarah.j@email.com',
-                phone: '+1-555-0124',
-                address: '456 Oak Ave, Somewhere, NY 10001',
-                birthday: '1990-12-03',
-                preferences: 'Gluten-free options',
-                notes: 'Allergic to nuts',
-                loyaltyPoints: 890,
-                totalOrders: 28,
-                totalSpent: 1245.75,
-                lastVisit: '2024-03-28',
-                favoriteItems: ['Grilled Salmon', 'Quinoa Salad'],
-                status: 'active',
-                tier: 'silver',
-                joinDate: '2023-03-22'
-            },
-            {
-                id: 3,
-                name: 'Mike Wilson',
-                email: 'mike.wilson@email.com',
-                phone: '+1-555-0125',
-                address: '789 Pine St, Elsewhere, TX 75201',
-                birthday: '1978-09-20',
-                preferences: 'Loves spicy food, Craft beer',
-                notes: 'Celebrates anniversary here every year',
-                loyaltyPoints: 2150,
-                totalOrders: 67,
-                totalSpent: 3456.80,
-                lastVisit: '2024-04-02',
-                favoriteItems: ['Spicy Wings', 'BBQ Ribs', 'IPA Beer'],
-                status: 'active',
-                tier: 'platinum',
-                joinDate: '2022-08-10'
-            },
-            {
-                id: 4,
-                name: 'Emily Davis',
-                email: 'emily.davis@email.com',
-                phone: '+1-555-0126',
-                address: '321 Elm St, Nowhere, FL 33101',
-                birthday: '1995-04-08',
-                preferences: 'Vegan options, Organic ingredients',
-                notes: 'Food blogger, takes photos of meals',
-                loyaltyPoints: 650,
-                totalOrders: 18,
-                totalSpent: 789.25,
-                lastVisit: '2024-03-25',
-                favoriteItems: ['Vegan Burger', 'Organic Salad'],
-                status: 'active',
-                tier: 'bronze',
-                joinDate: '2023-11-05'
-            }
-        ];
-        setCustomers(demoCustomers);
-    }, []);
 
     const openModal = (type, customer = null) => {
         setModalType(type);

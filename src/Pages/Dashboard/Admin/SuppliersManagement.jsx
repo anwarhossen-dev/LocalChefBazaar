@@ -1,10 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FaTruck, FaPlus, FaEdit, FaTrash, FaPhone, FaEnvelope, FaStar } from 'react-icons/fa';
 import { MdPayment, MdHistory, MdLocationOn } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+const demoSuppliers = [
+    {
+        id: 1,
+        name: 'Fresh Farm Produce',
+        contactPerson: 'John Smith',
+        phone: '+1-555-0123',
+        email: 'john@freshfarm.com',
+        address: '123 Farm Road, Green Valley, CA 90210',
+        category: 'food',
+        rating: 4.8,
+        paymentTerms: '30',
+        status: 'active',
+        notes: 'Excellent quality vegetables and fruits',
+        totalOrders: 156,
+        totalSpent: 45678.90,
+        lastOrder: '2024-04-01',
+        products: ['Tomatoes', 'Lettuce', 'Onions', 'Carrots']
+    },
+    {
+        id: 2,
+        name: 'Premium Meat Co.',
+        contactPerson: 'Sarah Johnson',
+        phone: '+1-555-0124',
+        email: 'sarah@premiummeat.com',
+        address: '456 Butcher Street, Meat District, TX 75201',
+        category: 'food',
+        rating: 4.9,
+        paymentTerms: '15',
+        status: 'active',
+        notes: 'High-quality meat products, reliable delivery',
+        totalOrders: 89,
+        totalSpent: 67890.12,
+        lastOrder: '2024-04-02',
+        products: ['Beef', 'Chicken', 'Pork', 'Lamb']
+    },
+    {
+        id: 3,
+        name: 'Beverage Distributors Inc.',
+        contactPerson: 'Mike Wilson',
+        phone: '+1-555-0125',
+        email: 'mike@beveragedist.com',
+        address: '789 Drink Avenue, Liquid City, FL 33101',
+        category: 'beverages',
+        rating: 4.5,
+        paymentTerms: '45',
+        status: 'active',
+        notes: 'Wide selection of beverages, competitive prices',
+        totalOrders: 234,
+        totalSpent: 23456.78,
+        lastOrder: '2024-03-30',
+        products: ['Soft Drinks', 'Juices', 'Water', 'Energy Drinks']
+    },
+    {
+        id: 4,
+        name: 'Clean & Shine Supplies',
+        contactPerson: 'Lisa Brown',
+        phone: '+1-555-0126',
+        email: 'lisa@cleanshine.com',
+        address: '321 Clean Street, Sparkle Town, NY 10001',
+        category: 'cleaning',
+        rating: 4.2,
+        paymentTerms: '30',
+        status: 'inactive',
+        notes: 'Good cleaning supplies but delivery issues',
+        totalOrders: 45,
+        totalSpent: 8765.43,
+        lastOrder: '2024-03-15',
+        products: ['Detergents', 'Sanitizers', 'Paper Towels', 'Gloves']
+    }
+];
+
 const SuppliersManagement = () => {
-    const [suppliers, setSuppliers] = useState([]);
+    const [suppliers, setSuppliers] = useState(demoSuppliers);
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add');
     const [selectedSupplier, setSelectedSupplier] = useState(null);
@@ -23,81 +94,6 @@ const SuppliersManagement = () => {
 
     const categories = ['food', 'beverages', 'cleaning', 'equipment', 'packaging', 'other'];
     const paymentTermsOptions = ['15', '30', '45', '60', 'COD'];
-
-    // Demo suppliers data
-    useEffect(() => {
-        const demoSuppliers = [
-            {
-                id: 1,
-                name: 'Fresh Farm Produce',
-                contactPerson: 'John Smith',
-                phone: '+1-555-0123',
-                email: 'john@freshfarm.com',
-                address: '123 Farm Road, Green Valley, CA 90210',
-                category: 'food',
-                rating: 4.8,
-                paymentTerms: '30',
-                status: 'active',
-                notes: 'Excellent quality vegetables and fruits',
-                totalOrders: 156,
-                totalSpent: 45678.90,
-                lastOrder: '2024-04-01',
-                products: ['Tomatoes', 'Lettuce', 'Onions', 'Carrots']
-            },
-            {
-                id: 2,
-                name: 'Premium Meat Co.',
-                contactPerson: 'Sarah Johnson',
-                phone: '+1-555-0124',
-                email: 'sarah@premiummeat.com',
-                address: '456 Butcher Street, Meat District, TX 75201',
-                category: 'food',
-                rating: 4.9,
-                paymentTerms: '15',
-                status: 'active',
-                notes: 'High-quality meat products, reliable delivery',
-                totalOrders: 89,
-                totalSpent: 67890.12,
-                lastOrder: '2024-04-02',
-                products: ['Beef', 'Chicken', 'Pork', 'Lamb']
-            },
-            {
-                id: 3,
-                name: 'Beverage Distributors Inc.',
-                contactPerson: 'Mike Wilson',
-                phone: '+1-555-0125',
-                email: 'mike@beveragedist.com',
-                address: '789 Drink Avenue, Liquid City, FL 33101',
-                category: 'beverages',
-                rating: 4.5,
-                paymentTerms: '45',
-                status: 'active',
-                notes: 'Wide selection of beverages, competitive prices',
-                totalOrders: 234,
-                totalSpent: 23456.78,
-                lastOrder: '2024-03-30',
-                products: ['Soft Drinks', 'Juices', 'Water', 'Energy Drinks']
-            },
-            {
-                id: 4,
-                name: 'Clean & Shine Supplies',
-                contactPerson: 'Lisa Brown',
-                phone: '+1-555-0126',
-                email: 'lisa@cleanshine.com',
-                address: '321 Clean Street, Sparkle Town, NY 10001',
-                category: 'cleaning',
-                rating: 4.2,
-                paymentTerms: '30',
-                status: 'inactive',
-                notes: 'Good cleaning supplies but delivery issues',
-                totalOrders: 45,
-                totalSpent: 8765.43,
-                lastOrder: '2024-03-15',
-                products: ['Detergents', 'Sanitizers', 'Paper Towels', 'Gloves']
-            }
-        ];
-        setSuppliers(demoSuppliers);
-    }, []);
 
     const openModal = (type, supplier = null) => {
         setModalType(type);

@@ -2,10 +2,11 @@
 
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+//import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AppLoading from "../../Components/Shared/AppLoading";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
   const axiosSecure = useAxiosSecure();
@@ -46,7 +47,7 @@ const PaymentSuccess = () => {
         navigate("/login");
       }
     });
-  }, [session_id]);
+  }, [session_id, axiosSecure, navigate]);
 
   return <AppLoading />;
 };
