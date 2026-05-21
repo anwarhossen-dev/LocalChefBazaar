@@ -23,6 +23,7 @@ import HeroBanner from "../../Components/Home/HeroBanner";
 import HeroOverlay from "../../Components/Home/HeroOverlay";
 //import KitchenView from "../../Components/Home/KitchenView";
 import LatestMeal from "../../Components/Home/LeatestMeal";
+import NearbyKitchens from "../../Components/Home/NearbyKitchens";
 import ReviewSection from "../../Components/Shared/ReviewSection";
 import KitchenMagic from "../../Components/Home/KitchenMagic";
 import ChefSpotlight from "../../Components/Home/ChefSpotlight";
@@ -44,6 +45,7 @@ const Home = () => {
             <HeroOverlay items={meals} />
             <LatestMeal />
             <ChefSpotlight />
+            <NearbyKitchens />
             <KitchenMagic />
             <ReviewSection />
         </div>

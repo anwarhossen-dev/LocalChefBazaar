@@ -41,6 +41,11 @@ const Navbar = () => {
                 </NavLink>
             </li>
             <li>
+                <NavLink to="/kitchens" className={({ isActive }) => (isActive ? "text-primary font-black scale-110 px-4 transition-all" : "px-4 font-bold text-slate-600 hover:text-primary transition-all")}>
+                    Kitchens
+                </NavLink>
+            </li>
+            <li>
                 <NavLink to="/blog" className={({ isActive }) => (isActive ? "text-primary font-black scale-110 px-4 transition-all" : "px-4 font-bold text-slate-600 hover:text-primary transition-all")}>
                     Blog
                 </NavLink>

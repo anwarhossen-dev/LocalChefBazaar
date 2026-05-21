@@ -1,95 +1,112 @@
 import React from "react";
-import { FaFacebookSquare, FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router";
-import logo from "../../assets/logo3.png";
+import logo from "../../assets/Logo1.png";
+import FooterOrchestrator from "../Dashboard/Footer/FooterOrchestrator";
+import Container from "./Container";
+import { motion as Motion } from "framer-motion";
 
 const Footer = () => {
     return (
-        <footer className="w-full py-8 md:py-12 bg-accent shadow-[0_-2px_6px_rgba(0,0,0,0.1)]">
-            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-10">
-                {/* ✅ 1. Logo + Description */}
-                <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                    <Link to="/">
-                        <img src={logo} alt="Website Logo" className="w-24 sm:w-28 mb-3" />
-                    </Link>
-                    <p className="opacity-90 text-xs sm:text-sm leading-relaxed max-w-xs">LocalChefBazaar — discover homemade meals, local chefs, and authentic flavors crafted with love.</p>
-                </div>
+        <FooterOrchestrator>
+            {({ data }) => (
+                <footer className="bg-slate-950 text-white pt-24 pb-12 overflow-hidden relative">
+                    {/* Decorative Background Glow */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-primary/20 blur-[120px] rounded-full -mt-[150px] pointer-events-none"></div>
 
-                {/* ✅ 2. Routes */}
-                <div className="text-center sm:text-left">
-                    <h3 className="text-base md:text-lg font-semibold mb-3">Routes</h3>
-                    <ul className="space-y-2 text-xs sm:text-sm opacity-90">
-                        <li>
-                            <Link to="/" className="hover:underline">
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/aboutUs" className="hover:underline">
-                                About Us
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/contactUs" className="hover:underline">
-                                Contact Us
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/chefs" className="hover:underline">
-                                Chefs
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                    <Container>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20 relative z-10">
+                            {/* Brand Section */}
+                            <div className="space-y-8">
+                                <Link to="/" className="flex items-center gap-3 group">
+                                    <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform duration-500">
+                                        <img src={logo} alt="logo" className="w-8 h-8 object-contain brightness-0 invert" />
+                                    </div>
+                                    <span className="text-2xl font-black tracking-tighter">ChefBazaar</span>
+                                </Link>
+                                <p className="text-slate-400 text-lg leading-relaxed font-medium">
+                                    Crafting authentic culinary connections between local artisans and passionate food lovers.
+                                </p>
+                                <div className="flex items-center gap-4">
+                                    {data.socials.map((social, idx) => (
+                                        <Motion.a
+                                            key={idx}
+                                            href={social.url}
+                                            whileHover={{ y: -5, scale: 1.1 }}
+                                            className={`w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all ${social.color}`}
+                                        >
+                                            <social.icon size={18} />
+                                        </Motion.a>
+                                    ))}
+                                </div>
+                            </div>
 
-                {/* ✅ 3. Working Hours */}
-                <div className="text-center sm:text-left">
-                    <h3 className="text-base md:text-lg font-semibold mb-3">Working Hours</h3>
-                    <ul className="space-y-2 text-xs sm:text-sm opacity-90">
-                        <li>Mon – Fri: 9 AM – 10 PM</li>
-                        <li>Saturday: 10 AM – 11 PM</li>
-                        <li>Sunday: Closed</li>
-                    </ul>
-                </div>
+                            {/* Quick Links */}
+                            <div>
+                                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-primary mb-8">Navigation</h3>
+                                <ul className="space-y-4">
+                                    {data.navigation.map((link, idx) => (
+                                        <li key={idx}>
+                                            <Link to={link.path} className="text-slate-400 hover:text-white font-bold transition-colors flex items-center gap-2 group">
+                                                <div className="w-1.5 h-1.5 bg-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
 
-                {/* ✅ 4. Contact Details */}
-                <div className="text-center sm:text-left">
-                    <h3 className="text-base md:text-lg font-semibold mb-3">Contact</h3>
-                    <ul className="space-y-2 text-xs sm:text-sm opacity-90">
-                        <li>Email: support@localchefbazaar.com</li>
-                        <li>Phone: +8801777498421</li>
-                        <li>Address: chattogram, Bangladesh</li>
-                    </ul>
-                </div>
+                            {/* Support */}
+                            <div>
+                                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-primary mb-8">Support</h3>
+                                <ul className="space-y-4">
+                                    {data.support.map((link, idx) => (
+                                        <li key={idx}>
+                                            <Link to={link.path} className="text-slate-400 hover:text-white font-bold transition-colors">
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
 
-                {/* ✅ 5. Social Links */}
-                <div className="text-center sm:text-left">
-                    <h3 className="text-base md:text-lg font-semibold mb-3">Follow Us</h3>
-                    <div className="flex flex-col gap-2 md:gap-3 items-center sm:items-start">
-                        <a href="https://www.facebook.com/MD.Anowarhossenkabir" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
-                            <FaFacebookSquare className="text-2xl md:text-3xl" />
-                            <span className="text-sm md:text-lg font-semibold">Facebook</span>
-                        </a>
+                            {/* Newsletter / Contact */}
+                            <div className="space-y-8">
+                                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-primary mb-8">Contact Us</h3>
+                                <div className="space-y-4 text-slate-400 font-bold">
+                                    <p className="hover:text-white transition-colors cursor-pointer">{data.contact.email}</p>
+                                    <p className="hover:text-white transition-colors cursor-pointer">{data.contact.phone}</p>
+                                    <p>{data.contact.address}</p>
+                                </div>
+                                <div className="pt-4">
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-2 flex">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Join the waitlist" 
+                                            className="bg-transparent border-none outline-none px-4 py-2 text-sm font-bold flex-1"
+                                        />
+                                        <button className="bg-primary text-white p-3 rounded-xl hover:scale-105 active:scale-95 transition-all">
+                                            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <a href="https://github.com/anwarhossen-dev" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
-                            <FaGithubSquare className="text-2xl md:text-3xl" />
-                            <span className="text-sm md:text-lg font-semibold">GitHub</span>
-                        </a>
-
-                        <a href="https://www.linkedin.com/in/anowar21" className="flex items-center gap-2 hover:opacity-80 min-h-[44px]">
-                            <FaLinkedin className="text-2xl md:text-3xl" />
-                            <span className="text-sm md:text-lg font-semibold">LinkedIn</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            {/* ✅ Divider */}
-            <div className="border border-gray-400 mt-6 md:mt-8 w-full max-w-7xl mx-auto px-4"></div>
-
-            {/* ✅ Bottom Section */}
-            <div className="text-center mt-4 text-xs sm:text-sm opacity-70">© {new Date().getFullYear()} LocalChefBazaar — All Rights Reserved.</div>
-        </footer>
+                        {/* Bottom Bar */}
+                        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+                            <p className="text-slate-500 text-sm font-bold">
+                                © {new Date().getFullYear()} Local Chef Bazaar. Built with ❤️ for artisans.
+                            </p>
+                            <div className="flex items-center gap-8 text-xs font-black text-slate-500 uppercase tracking-widest">
+                                <span className="hover:text-primary cursor-pointer transition-colors">Instagram</span>
+                                <span className="hover:text-primary cursor-pointer transition-colors">Twitter</span>
+                                <span className="hover:text-primary cursor-pointer transition-colors">Dribbble</span>
+                            </div>
+                        </div>
+                    </Container>
+                </footer>
+            )}
+        </FooterOrchestrator>
     );
 };
 

@@ -112,7 +112,9 @@ const NearbyKitchens = () => {
                 // Temporary fallback endpoint
                 const res = await axiosSecure.get('/meals');
 
-                return Array.isArray(res.data) ? res.data : [];
+                // Handle both array response and object with meals property
+                const data = Array.isArray(res.data) ? res.data : (res.data?.meals || []);
+                return data;
             } catch (error) {
                 console.error('Error fetching kitchens:', error);
                 return [];
