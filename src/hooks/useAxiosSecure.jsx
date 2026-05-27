@@ -2,12 +2,9 @@
 
 
 import axios from 'axios';
-import React, { useEffect } from 'react';
-//import useAuth from './useAuth';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import useAuth from './useAuth';
-
-
 
 const axiosSecure = axios.create({
     baseURL: import.meta.env.PROD ? "https://local-chef-bazaar-server-nu.vercel.app" : "/api/",
@@ -19,9 +16,10 @@ const useAxiosSecure = () => {
     const navigate = useNavigate()
 
     useEffect(() =>{
-        const reqInreceptor = axiosSecure.interceptors.request.use((config) => {
-            if(user?.accessToken){
-                config.headers.Authorization = `Bearer ${user?.accessToken}`;
+        const reqInterceptor = axiosSecure.interceptors.request.use(async (config) => {
+            const token = await user?.getIdToken();
+            if (token) {
+                config.headers.set('Authorization', `Bearer ${token}`);
             }
 
             return config
@@ -29,25 +27,21 @@ const useAxiosSecure = () => {
 
         const resInterceptor = axiosSecure.interceptors.response.use((response) => {
             return response
-        },(error) => {
+        }, async (error) => {
             console.log(error)
-            const statusCode = error.response?.status;
-            if(statusCode === 401 || statusCode === 403){
-                logOut().then(()=> {
-                    navigate('/login')
-                })
+            const status = error.response?.status;
+            if(status === 401 || status === 403){
+                await logOut();
+                navigate('/login');
             }
             return Promise.reject(error)
         }
         )
 
         return() => {
-            axiosSecure.interceptors.request.eject(reqInreceptor);
+            axiosSecure.interceptors.request.eject(reqInterceptor);
             axiosSecure.interceptors.response.eject(resInterceptor)
         }
-        
-
-
     },[user, logOut, navigate])
     return axiosSecure
 };

@@ -5,27 +5,25 @@
 
 import React, { useEffect, useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
-import axios from 'axios';
-
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const AddOrder = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/orders/user/${user.email}`)
+      axiosSecure
+        .get(`/orders/user/${user.email}`)
         .then((res) => setOrders(res.data))
         .catch((err) => console.error(err));
     }
-  }, [user]);
+  }, [user, axiosSecure]);
 
   const handlePayment = async (order) => {
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/create-order-payment`,
-        {
+      const res = await axiosSecure.post("/create-order-payment", {
           orderId: order._id,
           mealName: order.mealName,
           price: order.price * order.quantity,

@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://local-chef-bazaar-server-nu.vercel.app',
+        target: 'http://localhost:3000', // Change this to your backend's actual port (e.g., 3000 or 5000)
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: true,
