@@ -52,7 +52,7 @@ const Meal = () => {
   const { data: meals = [], isLoading } = useQuery({
     queryKey: ['meals'],
     queryFn: async () => {
-      const result = await axios.get(`${import.meta.env.VITE_API_URL}/meals`);
+      const result = await axios.get("/api/meals");
       return result.data;
     },
   });

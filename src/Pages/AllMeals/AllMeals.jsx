@@ -303,8 +303,8 @@ import { useQuery } from "@tanstack/react-query";
 import AppLoading from "../../Components/Shared/AppLoading";
 import { IoSearchOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-//import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AllMeals = () => {
     const [sortPrice, setSortPrice] = useState("asc");
@@ -312,13 +312,14 @@ const AllMeals = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [mealsPerPage] = useState(12); 
 
+    const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
     const defaultFoodImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600";
 
     const { data: meals = [], isLoading } = useQuery({
         queryKey: ["all-meals"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/meals");
+            const res = await axiosPublic.get("/meals");
             return Array.isArray(res.data) ? res.data : res.data.meals || [];
         },
     });

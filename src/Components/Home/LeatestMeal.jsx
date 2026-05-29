@@ -77,20 +77,28 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaStar, FaArrowRight } from "react-icons/fa";
-import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
+import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 import PremiumCard from "../UI/Primitives/PremiumCard";
 import TextReveal from "../UI/Primitives/TextReveal";
 import Container from "../Shared/Container";
 
 const LatestMeal = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const defaultFoodImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600";
 
   const { data: meals = [], isLoading } = useQuery({
     queryKey: ["LatestMeal"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/leatestMeals");
-      return res.data;
+      try {
+        const res = await axiosPublic.get("/leatestMeals");
+        return res.data;
+      } catch (error) {
+        if (error.response?.status === 404) {
+          const res = await axiosPublic.get("/meals");
+          return Array.isArray(res.data) ? res.data.slice(0, 8) : (res.data?.meals?.slice(0, 8) || []);
+        }
+        throw error;
+      }
     },
   });
 

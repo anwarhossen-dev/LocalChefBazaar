@@ -93,10 +93,10 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 //import useAxiosSecure from '../../hooks/useAxiosSecure';
 import SkeletonCard from '../Shared/SkeletonCard';
-import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
+import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 
 const NearbyKitchens = () => {
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
 
     const {
         data: kitchens = [],
@@ -107,10 +107,10 @@ const NearbyKitchens = () => {
         queryFn: async () => {
             try {
                 // Recommended API endpoint
-                // const res = await axiosSecure.get('/kitchens');
+                // const res = await axiosPublic.get('/kitchens');
 
                 // Temporary fallback endpoint
-                const res = await axiosSecure.get('/meals');
+                const res = await axiosPublic.get('/meals');
 
                 // Handle both array response and object with meals property
                 const data = Array.isArray(res.data) ? res.data : (res.data?.meals || []);
@@ -200,7 +200,7 @@ const NearbyKitchens = () => {
                                         <img
                                             src={
                                                 kitchen.image ||
-                                                'https://i.ibb.co/z6J7XzS/food-placeholder.jpg'
+                                                'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600'
                                             }
                                             alt={kitchen.name || kitchen.foodName}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"

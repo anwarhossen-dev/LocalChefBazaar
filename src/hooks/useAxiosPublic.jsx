@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosPublic = axios.create({
-    baseURL: import.meta.env.PROD ? "https://local-chef-bazaar-server-nu.vercel.app" : "/api/",
+    baseURL: "/api/",
 });
 
 const useAxiosPublic = () => {

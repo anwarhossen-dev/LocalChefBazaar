@@ -34,8 +34,16 @@ const Home = () => {
     const { data: meals = [] } = useQuery({
         queryKey: ["LeatestMeal"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/leatestMeals");
-            return res.data;
+            try {
+                const res = await axiosPublic.get("/leatestMeals");
+                return res.data;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    const res = await axiosPublic.get("/meals");
+                    return Array.isArray(res.data) ? res.data : (res.data?.meals || []);
+                }
+                throw error;
+            }
         },
     });
 

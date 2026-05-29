@@ -8,15 +8,23 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 // import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAxiosSecure from "../../hooks/useAxiosSecure.jsx";
+import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 
 const ReviewSection = () => {
-    const axiosPublic = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     const { data: reviews = [] } = useQuery({
         queryKey: ["review"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/reviews");
-            return res.data;
+            try {
+                const res = await axiosPublic.get("/reviews");
+                return res.data;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    const res = await axiosPublic.get("/review.json", { baseURL: "/" });
+                    return res.data;
+                }
+                throw error;
+            }
         },
     });
 
@@ -26,7 +34,7 @@ const ReviewSection = () => {
             <p className="text-sm text-center mb-8">Enhance posture, mobility, and well-being effortlessly with Posture Pro. Achieve proper alignment, reduce pain, and strengthen your body with ease!</p>
 
             <Swiper
-                effect="coverflow  overflow-hidden"
+                effect="coverflow"
                 grabCursor={true}
                 spaceBetween={20}
                 autoplay={{ delay: 2500, disableOnInteraction: false }}
@@ -46,11 +54,11 @@ const ReviewSection = () => {
                 }}
                 loop={true}
                 pagination={{ clickable: true }}
-                modules={[EffectCoverflow, Autoplay]}
-                className="mySwiper  overflow-hidden"
+                modules={[EffectCoverflow, Autoplay, Pagination]}
+                className="mySwiper overflow-hidden"
             >
-                {reviews.map((review) => (
-                    <SwiperSlide key={review._id} className="flex justify-center items-center">
+                {reviews.map((review, index) => (
+                    <SwiperSlide key={review._id || review.id || `fallback-key-${index}`} className="flex justify-center items-center">
                         <ReviewsCard review={review}></ReviewsCard>
                     </SwiperSlide>
                 ))}
