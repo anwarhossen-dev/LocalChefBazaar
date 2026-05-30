@@ -18,7 +18,7 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+//import useAxiosPublic from "../../hooks/useAxiosPublic";
 import HeroBanner from "../../Components/Home/HeroBanner";
 import HeroOverlay from "../../Components/Home/HeroOverlay";
 //import KitchenView from "../../Components/Home/KitchenView";
@@ -27,25 +27,44 @@ import NearbyKitchens from "../../Components/Home/NearbyKitchens";
 import ReviewSection from "../../Components/Shared/ReviewSection";
 import KitchenMagic from "../../Components/Home/KitchenMagic";
 import ChefSpotlight from "../../Components/Home/ChefSpotlight";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Home = () => {
-    const axiosPublic = useAxiosPublic();
+    // const axiosPublic = useAxiosPublic();
+
+    // const { data: meals = [] } = useQuery({
+    //     queryKey: ["LeatestMeal"],
+    //     queryFn: async () => {
+    //         try {
+    //             const res = await axiosPublic.get("/leatestMeals");
+    //             return res.data;
+    //         } catch (error) {
+    //             if (error.response?.status === 404) {
+    //                 const res = await axiosPublic.get("/meals");
+    //                 return Array.isArray(res.data) ? res.data : (res.data?.meals || []);
+    //             }
+    //             throw error;
+    //         }
+    //     },
+    // });
 
     const { data: meals = [] } = useQuery({
-        queryKey: ["LeatestMeal"],
-        queryFn: async () => {
-            try {
-                const res = await axiosPublic.get("/leatestMeals");
-                return res.data;
-            } catch (error) {
-                if (error.response?.status === 404) {
-                    const res = await axiosPublic.get("/meals");
-                    return Array.isArray(res.data) ? res.data : (res.data?.meals || []);
-                }
-                throw error;
+    queryKey: ["latestMeals"],
+    queryFn: async () => {
+        try {
+            const res = await useAxiosPublic.get("/latestMeals");
+            return res.data;
+        } catch (error) {
+            if (error.response?.status === 404) {
+                const res = await useAxiosPublic.get("/meals");
+                return Array.isArray(res.data)
+                    ? res.data
+                    : (res.data?.meals || []);
             }
-        },
-    });
+            throw error;
+        }
+    },
+});
 
     return (
         <div className="space-y-8 sm:space-y-10 md:space-y-12 lg:space-y-16">
