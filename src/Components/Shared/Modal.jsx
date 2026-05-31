@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/Logo1.png";
+import placeholder from "../../assets/images/placeholder.jpg";
 //import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
@@ -79,7 +80,7 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary">
-                                <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} />
+                                <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src=placeholder}} />
                             </div>
 
                             <button onClick={handleLogout} className="btn btn-sm md:btn-md btn-outline rounded-xl">
@@ -103,7 +104,7 @@ const Navbar = () => {
                     {/* Mobile User Image */}
                     {user && (
                         <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary">
-                            <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} />
+                            <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src=placeholder}} />
                         </div>
                     )}
 

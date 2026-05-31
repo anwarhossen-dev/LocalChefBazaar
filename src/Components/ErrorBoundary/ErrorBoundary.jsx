@@ -11,10 +11,22 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
+    this.setState({ error, errorInfo });
+    try {
+      const entry = {
+        id: Date.now(),
+        message: error && error.toString ? error.toString() : String(error),
+        stack: errorInfo && errorInfo.componentStack ? errorInfo.componentStack : "",
+        time: new Date().toISOString(),
+        url: typeof window !== 'undefined' ? window.location.href : '',
+        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+      };
+      const existing = JSON.parse(localStorage.getItem('app_errors') || '[]');
+      existing.unshift(entry);
+      localStorage.setItem('app_errors', JSON.stringify(existing.slice(0, 100)));
+    } catch (e) {
+      // ignore logging errors
+    }
   }
 
   render() {

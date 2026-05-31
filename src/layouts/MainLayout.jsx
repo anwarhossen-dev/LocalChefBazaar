@@ -35,17 +35,23 @@ import Navbar from "../Components/Shared/Navbar";
 import Footer from "../Components/Shared/Footer";
 import useAuth from "../hooks/useAuth";
 import ScrollToTop from "../Components/ScrollToTop/ScrollToTop";
+import CartDrawer from "../Components/CartDrawer";
 
 const MainLayout = () => {
     const { loading } = useAuth();
-    if (loading) {
-        return <AppLoading />;
-    }
     return (
         <div className=" flex flex-col min-h-screen text-base-content">
             {/* Navbar */}
-            <ScrollToTop></ScrollToTop>
-            <Navbar/>
+            <ScrollToTop />
+            <Navbar />
+            <CartDrawer />
+
+            {/* Top inline loader shown while auth initializes (non-blocking) */}
+            {loading && (
+                <div className="w-full flex items-center justify-center py-2">
+                    <span className="loading loading-spinner loading-md"></span>
+                </div>
+            )}
 
             {/* Main Content - grows to fill available space */}
             <main className=" grow">
@@ -55,7 +61,7 @@ const MainLayout = () => {
             </main>
 
             {/* Footer stays at the bottom */}
-            <Footer></Footer>
+            <Footer />
         </div>
     );
 };

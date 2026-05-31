@@ -48,15 +48,17 @@ const Home = () => {
     //     },
     // });
 
-    const { data: meals = [] } = useQuery({
+    const axiosPublic = useAxiosPublic();
+
+const { data: meals = [] } = useQuery({
     queryKey: ["latestMeals"],
     queryFn: async () => {
         try {
-            const res = await useAxiosPublic.get("/latestMeals");
+            const res = await axiosPublic.get("/latestMeals");
             return res.data;
         } catch (error) {
             if (error.response?.status === 404) {
-                const res = await useAxiosPublic.get("/meals");
+                const res = await axiosPublic.get("/meals");
                 return Array.isArray(res.data)
                     ? res.data
                     : (res.data?.meals || []);

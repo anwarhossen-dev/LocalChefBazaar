@@ -147,6 +147,7 @@ import MyOrders from "../Pages/Dashboard/User/MyOrders";
 import PaymentSuccess from "../Pages/Payments/PaymentSuccess";
 import OrderMeal from "../Pages/Order/OrderMeal";
 import PlatformStatistics from "../Pages/Dashboard/Admin/PlatformStatistics";
+import ErrorDashboard from "../Pages/Dashboard/Admin/ErrorDashboard";
 import PaymentCancelled from "../Pages/Payments/PaymentCancelled";
 import OrderPage from "../Pages/OrderPage/OrderPage";
 import OrderRequests from "../Pages/Dashboard/Chef/OrderRequests";
@@ -265,6 +266,15 @@ export const router = createBrowserRouter([
                 element: (
                     <AdminRoute>
                         <ManageRequests />
+                    </AdminRoute>
+                ),
+                errorElement: <Error500 />,
+            },
+            {
+                path: "errors",
+                element: (
+                    <AdminRoute>
+                        <ErrorDashboard />
                     </AdminRoute>
                 ),
                 errorElement: <Error500 />,

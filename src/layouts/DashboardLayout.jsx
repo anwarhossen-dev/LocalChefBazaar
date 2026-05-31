@@ -6,6 +6,7 @@ import { IoHomeOutline, IoRestaurantOutline } from "react-icons/io5";
 import { TbLogout2, TbReportAnalytics } from "react-icons/tb";
 import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import Logo from "../assets/Logo.png";
+import placeholder from "../assets/images/placeholder.jpg";
 import { 
     FaUser, FaUsersSlash, FaCashRegister, FaUtensils, 
     FaCalendarAlt, FaMotorcycle, FaTruck,
@@ -80,7 +81,7 @@ const DashboardLayout = () => {
                         <label>
                             <input type="checkbox" className="toggle toggle-sm sm:toggle-md" onChange={handleThemeToggle} checked={theme === "dark"} />
                         </label>
-                        <img src={user?.photoURL} alt="Profile" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-300" />
+                        <img src={user?.photoURL} alt="Profile" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-300" onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src=placeholder}} />
                         <div className="text-left hidden sm:block">
                             <p className="font-semibold text-sm">{user?.displayName}</p>
                             <p className="text-xs text-gray-500">{role}</p>
@@ -460,6 +461,20 @@ const DashboardLayout = () => {
                                             >
                                                 <CiSquareQuestion className="text-lg" />
                                                 <span className="is-drawer-close:hidden">Manage Requests</span>
+                                            </NavLink>
+                                        </li>
+
+                                        {/* Error Dashboard */}
+                                        <li>
+                                            <NavLink
+                                                to="/dashboard/errors"
+                                                className={({ isActive }) =>
+                                                    `is-drawer-close:tooltip is-drawer-close:tooltip-right ${isActive ? "bg-primary text-white" : ""}`
+                                                }
+                                                data-tip="Error Dashboard"
+                                            >
+                                                <TbReportAnalytics className="text-lg" />
+                                                <span className="is-drawer-close:hidden">Error Dashboard</span>
                                             </NavLink>
                                         </li>
                                     </>

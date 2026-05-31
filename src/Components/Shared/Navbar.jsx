@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/Logo1.png";
+import placeholder from "../../assets/images/placeholder.jpg";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import { CartContext } from "../../providers/CartContext";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const { setIsCartOpen, cartCount } = useContext(CartContext);
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -85,6 +89,19 @@ const Navbar = () => {
 
                 {/* RIGHT (Desktop Only) */}
                 <div className="navbar-end hidden lg:flex items-center gap-6">
+                    {/* Cart Button */}
+                    <button 
+                        onClick={() => setIsCartOpen(true)}
+                        className="relative p-2 text-slate-600 hover:text-primary transition-colors group"
+                    >
+                        <FaShoppingCart className="w-6 h-6" />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-lg shadow-primary/20 animate-bounce">
+                                {cartCount}
+                            </span>
+                        )}
+                    </button>
+
                     <label className="swap swap-rotate text-slate-600 hover:text-primary transition-colors">
                         <input type="checkbox" onChange={handleThemeToggle} checked={theme === "dark"} />
                         <svg className="swap-on fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71,.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.707.293,1,1,0,0,0,.707-1.707l-.71-.71A1,1,0,0,0,4.93,6.34Zm12.72,9.9a1,1,0,0,0-.71,.71l.71,.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5ZM18.36,7.05l.71-.71a1,1,0,1,0-1.41-1.41l-.71,.71a1,1,0,0,0,1.41,1.41ZM19,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-1,6.34a1,1,0,0,0-1.41,0l-.71,.71a1,1,0,0,0,1.41,1.41l.71-.71A1,1,0,0,0,18.36,17.34Z"/></svg>
@@ -94,7 +111,7 @@ const Navbar = () => {
                     {user ? (
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/20">
-                                <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} />
+                                <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src=placeholder}} />
                             </div>
                             <button onClick={handleLogout} className="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-black text-sm hover:bg-primary transition-all active:scale-95">
                                 Log Out
@@ -112,9 +129,22 @@ const Navbar = () => {
 
                 {/* MOBILE SECTION */}
                 <div className="navbar-end flex lg:hidden items-center gap-4">
+                    {/* Cart Button (Mobile) */}
+                    <button 
+                        onClick={() => setIsCartOpen(true)}
+                        className="relative p-2 text-slate-600 hover:text-primary transition-colors"
+                    >
+                        <FaShoppingCart className="w-6 h-6" />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-lg shadow-primary/20">
+                                {cartCount}
+                            </span>
+                        )}
+                    </button>
+
                     {user && (
                         <div className="w-10 h-10 rounded-2xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/20">
-                            <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} />
+                            <img src={user?.photoURL} alt="User" className="w-full h-full object-cover" title={user?.displayName} onError={(e)=>{e.currentTarget.onerror=null; e.currentTarget.src=placeholder}} />
                         </div>
                     )}
 

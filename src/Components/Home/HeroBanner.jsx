@@ -55,6 +55,8 @@ const images = [img1, img2, img3];
 
 const HeroBanner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,11 +78,22 @@ const HeroBanner = () => {
           key={index}
           src={img}
           alt="hero"
+          onLoad={() => setLoadedCount(c => c + 1)}
+          onError={() => setErrorLoading(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
             currentIndex === index ? "opacity-100 scale-105" : "opacity-0"
           }`}
         />
       ))}
+
+      {errorLoading && loadedCount === 0 && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white z-20">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold">Banner unavailable</h2>
+            <p className="mt-2 text-sm">Showing featured content below.</p>
+          </div>
+        </div>
+      )}
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/70" />
