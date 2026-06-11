@@ -73,10 +73,142 @@
 
 // export default LeatestMeal;
 
+
+
+// import React from "react";
+// import { useQuery } from "@tanstack/react-query";
+// import { Link } from "react-router-dom";
+// import { FaStar, FaArrowRight } from "react-icons/fa";
+// import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
+// import PremiumCard from "../UI/Primitives/PremiumCard";
+// import TextReveal from "../UI/Primitives/TextReveal";
+// import Container from "../Shared/Container";
+
+// // const LatestMeal = () => {
+// //   const axiosPublic = useAxiosPublic();
+// //   const defaultFoodImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600";
+
+// //   const { data: meals = [], isLoading } = useQuery({
+// //     queryKey: ["LatestMeal"],
+// //     queryFn: async () => {
+// //       try {
+// //         const res = await axiosPublic.get("/leatestMeals");
+// //         return res.data;
+// //       } catch (error) {
+// //         if (error.response?.status === 404) {
+// //           const res = await axiosPublic.get("/meals");
+// //           return Array.isArray(res.data) ? res.data.slice(0, 8) : (res.data?.meals?.slice(0, 8) || []);
+// //         }
+// //         throw error;
+// //       }
+// //     },
+// //   });
+
+
+// const { data: meals = [], isLoading } = useQuery({
+//   queryKey: ["latestMeals"],
+//   queryFn: async () => {
+//     try {
+//       const res = await axiosPublic.get("/latestMeals");
+//       return res.data;
+//     } catch (error) {
+//       if (error.response?.status === 404) {
+//         const res = await axiosPublic.get("/meals");
+//         return Array.isArray(res.data)
+//           ? res.data.slice(0, 8)
+//           : (res.data?.meals?.slice(0, 8) || []);
+//       }
+//       throw error;
+//     }
+//   },
+// });
+
+//   if (isLoading) {
+//     return (
+//       <section className="py-24">
+//         <Container>
+//             <div className="h-12 w-64 bg-slate-100 animate-pulse mx-auto mb-12 rounded-2xl"></div>
+//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+//             {[...Array(4)].map((_, idx) => (
+//                 <div key={idx} className="aspect-[3/4] bg-slate-50 animate-pulse rounded-[2.5rem]"></div>
+//             ))}
+//             </div>
+//         </Container>
+//       </section>
+//     );
+//   };
+
+//   return (
+//     <section className="py-24 bg-slate-50/30">
+//       <Container>
+//         <div className="text-center mb-16">
+//             <TextReveal>
+//                 <h2 className="text-4xl md:text-6xl font-black text-slate-800 tracking-tight">
+//                     Today's Daily <span className="text-primary">Meals</span>
+//                 </h2>
+//             </TextReveal>
+//             <div className="w-20 h-1.5 bg-primary mx-auto mt-6 rounded-full"></div>
+//         </div>
+
+//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+//             {meals.map((meal, idx) => (
+//             <PremiumCard key={meal._id} delay={idx * 0.1}>
+//                 <div className="relative aspect-[4/5] overflow-hidden">
+//                     <img 
+//                         src={meal.foodImage || defaultFoodImage} 
+//                         alt={meal.foodName} 
+//                         className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-1000"
+//                     />
+//                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-black text-slate-800 flex items-center gap-1.5 shadow-xl">
+//                         <FaStar className="text-amber-400" />
+//                         <span>{meal.rating || "4.5"}</span>
+//                     </div>
+//                 </div>
+
+//                 <div className="p-8">
+//                     <h3 className="text-xl font-bold text-slate-800 mb-4 line-clamp-1 group-hover:text-primary transition-colors">
+//                         {meal.foodName}
+//                     </h3>
+
+//                     <div className="space-y-3 mb-8">
+//                         <div className="flex items-center justify-between text-sm">
+//                             <span className="text-slate-400 font-bold uppercase tracking-tighter">Chef</span>
+//                             <span className="text-slate-700 font-black">{meal.chefName || "Artisan"}</span>
+//                         </div>
+//                         <div className="flex items-center justify-between text-sm">
+//                             <span className="text-slate-400 font-bold uppercase tracking-tighter">Location</span>
+//                             <span className="text-slate-700 font-black">📍 {meal.deliveryArea?.split(" ")[0] || "Local"}</span>
+//                         </div>
+//                     </div>
+
+//                     <div className="flex items-center justify-between gap-4">
+//                         <div className="flex flex-col">
+//                             <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Price</span>
+//                             <span className="text-2xl font-black text-slate-900">${meal.price || "0.00"}</span>
+//                         </div>
+//                         <Link
+//                             to={`/mealDetails/${meal._id}`}
+//                             className="bg-slate-900 text-white p-4 rounded-2xl hover:bg-primary transition-all active:scale-95 shadow-lg shadow-slate-200"
+//                         >
+//                             <FaArrowRight />
+//                         </Link>
+//                     </div>
+//                 </div>
+//             </PremiumCard>
+//             ))}
+//         </div>
+//       </Container>
+//     </section>
+//   );
+
+// export default LatestMeal;
+
+
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaStar, FaArrowRight } from "react-icons/fa";
+
 import useAxiosPublic from "../../hooks/useAxiosPublic.jsx";
 import PremiumCard from "../UI/Primitives/PremiumCard";
 import TextReveal from "../UI/Primitives/TextReveal";
@@ -84,18 +216,21 @@ import Container from "../Shared/Container";
 
 const LatestMeal = () => {
   const axiosPublic = useAxiosPublic();
-  const defaultFoodImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600";
+  const defaultFoodImage =
+    "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600";
 
   const { data: meals = [], isLoading } = useQuery({
-    queryKey: ["LatestMeal"],
+    queryKey: ["latestMeals"],
     queryFn: async () => {
       try {
-        const res = await axiosPublic.get("/leatestMeals");
+        const res = await axiosPublic.get("/latestMeals");
         return res.data;
       } catch (error) {
         if (error.response?.status === 404) {
           const res = await axiosPublic.get("/meals");
-          return Array.isArray(res.data) ? res.data.slice(0, 8) : (res.data?.meals?.slice(0, 8) || []);
+          return Array.isArray(res.data)
+            ? res.data.slice(0, 8)
+            : res.data?.meals?.slice(0, 8) || [];
         }
         throw error;
       }
@@ -106,12 +241,15 @@ const LatestMeal = () => {
     return (
       <section className="py-24">
         <Container>
-            <div className="h-12 w-64 bg-slate-100 animate-pulse mx-auto mb-12 rounded-2xl"></div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="h-12 w-64 bg-slate-100 animate-pulse mx-auto mb-12 rounded-2xl"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[...Array(4)].map((_, idx) => (
-                <div key={idx} className="aspect-[3/4] bg-slate-50 animate-pulse rounded-[2.5rem]"></div>
+              <div
+                key={idx}
+                className="aspect-[3/4] bg-slate-50 animate-pulse rounded-[2.5rem]"
+              ></div>
             ))}
-            </div>
+          </div>
         </Container>
       </section>
     );
@@ -121,60 +259,75 @@ const LatestMeal = () => {
     <section className="py-24 bg-slate-50/30">
       <Container>
         <div className="text-center mb-16">
-            <TextReveal>
-                <h2 className="text-4xl md:text-6xl font-black text-slate-800 tracking-tight">
-                    Today's Daily <span className="text-primary">Meals</span>
-                </h2>
-            </TextReveal>
-            <div className="w-20 h-1.5 bg-primary mx-auto mt-6 rounded-full"></div>
+          <TextReveal>
+            <h2 className="text-4xl md:text-6xl font-black text-slate-800 tracking-tight">
+              Today's Daily <span className="text-primary">Meals</span>
+            </h2>
+          </TextReveal>
+          <div className="w-20 h-1.5 bg-primary mx-auto mt-6 rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {meals.map((meal, idx) => (
+          {meals.map((meal, idx) => (
             <PremiumCard key={meal._id} delay={idx * 0.1}>
-                <div className="relative aspect-[4/5] overflow-hidden">
-                    <img 
-                        src={meal.foodImage || defaultFoodImage} 
-                        alt={meal.foodName} 
-                        className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                    />
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-black text-slate-800 flex items-center gap-1.5 shadow-xl">
-                        <FaStar className="text-amber-400" />
-                        <span>{meal.rating || "4.5"}</span>
-                    </div>
+              <div className="relative aspect-[4/5] overflow-hidden">
+                <img
+                  src={meal.foodImage || defaultFoodImage}
+                  alt={meal.foodName}
+                  className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                />
+
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-black text-slate-800 flex items-center gap-1.5 shadow-xl">
+                  <FaStar className="text-amber-400" />
+                  <span>{meal.rating || "4.5"}</span>
+                </div>
+              </div>
+
+              <div className="p-8">
+                <h3 className="text-xl font-bold text-slate-800 mb-4 line-clamp-1 group-hover:text-primary transition-colors">
+                  {meal.foodName}
+                </h3>
+
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400 font-bold uppercase tracking-tighter">
+                      Chef
+                    </span>
+                    <span className="text-slate-700 font-black">
+                      {meal.chefName || "Artisan"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400 font-bold uppercase tracking-tighter">
+                      Location
+                    </span>
+                    <span className="text-slate-700 font-black">
+                      📍 {meal.deliveryArea?.split(" ")[0] || "Local"}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="p-8">
-                    <h3 className="text-xl font-bold text-slate-800 mb-4 line-clamp-1 group-hover:text-primary transition-colors">
-                        {meal.foodName}
-                    </h3>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">
+                      Price
+                    </span>
+                    <span className="text-2xl font-black text-slate-900">
+                      ${meal.price || "0.00"}
+                    </span>
+                  </div>
 
-                    <div className="space-y-3 mb-8">
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-400 font-bold uppercase tracking-tighter">Chef</span>
-                            <span className="text-slate-700 font-black">{meal.chefName || "Artisan"}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-400 font-bold uppercase tracking-tighter">Location</span>
-                            <span className="text-slate-700 font-black">📍 {meal.deliveryArea?.split(" ")[0] || "Local"}</span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex flex-col">
-                            <span className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Price</span>
-                            <span className="text-2xl font-black text-slate-900">${meal.price || "0.00"}</span>
-                        </div>
-                        <Link
-                            to={`/mealDetails/${meal._id}`}
-                            className="bg-slate-900 text-white p-4 rounded-2xl hover:bg-primary transition-all active:scale-95 shadow-lg shadow-slate-200"
-                        >
-                            <FaArrowRight />
-                        </Link>
-                    </div>
+                  <Link
+                    to={`/mealDetails/${meal._id}`}
+                    className="bg-slate-900 text-white p-4 rounded-2xl hover:bg-primary transition-all active:scale-95 shadow-lg shadow-slate-200"
+                  >
+                    <FaArrowRight />
+                  </Link>
                 </div>
+              </div>
             </PremiumCard>
-            ))}
+          ))}
         </div>
       </Container>
     </section>
